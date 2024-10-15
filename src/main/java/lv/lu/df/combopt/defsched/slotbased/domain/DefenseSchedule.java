@@ -30,12 +30,12 @@ public class DefenseSchedule {
     private List<Session> sessions = new ArrayList<>();
     @PlanningEntityCollectionProperty
     private List<Thesis> thesis = new ArrayList<>();
-    @ProblemFactCollectionProperty
     @ValueRangeProvider(id = "slots")
     private List<Slot> slots = new ArrayList<>();
 
     @PlanningScore
-    private SimpleScore score;
+    //private SimpleScore score;
+    private HardSoftScore score;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefenseSchedule.class);
     public void printSchedule() {
