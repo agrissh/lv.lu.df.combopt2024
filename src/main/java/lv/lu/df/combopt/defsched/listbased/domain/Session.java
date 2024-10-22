@@ -1,6 +1,7 @@
 package lv.lu.df.combopt.defsched.listbased.domain;
 
 import ai.timefold.solver.core.api.domain.entity.PlanningEntity;
+import ai.timefold.solver.core.api.domain.lookup.PlanningId;
 import ai.timefold.solver.core.api.domain.variable.PlanningListVariable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @PlanningEntity
 public class Session {
+    @PlanningId
     private Integer sessionId;
     private String room;
     private LocalDateTime startingAt;

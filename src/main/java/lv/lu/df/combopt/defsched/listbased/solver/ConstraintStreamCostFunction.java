@@ -1,15 +1,22 @@
 package lv.lu.df.combopt.defsched.listbased.solver;
 
+import ai.timefold.solver.core.api.score.buildin.hardmediumsoftbigdecimal.HardMediumSoftBigDecimalScore;
 import ai.timefold.solver.core.api.score.buildin.hardsoft.HardSoftScore;
-import ai.timefold.solver.core.api.score.stream.Constraint;
-import ai.timefold.solver.core.api.score.stream.ConstraintFactory;
-import ai.timefold.solver.core.api.score.stream.ConstraintProvider;
+import ai.timefold.solver.core.api.score.buildin.hardsoftbigdecimal.HardSoftBigDecimalScore;
+import ai.timefold.solver.core.api.score.stream.*;
+import ai.timefold.solver.core.api.score.stream.common.LoadBalance;
+import ai.timefold.solver.core.api.score.stream.uni.UniConstraintStream;
 import lv.lu.df.combopt.defsched.listbased.domain.Person;
+import lv.lu.df.combopt.defsched.listbased.domain.ScheduleProperties;
 import lv.lu.df.combopt.defsched.listbased.domain.Session;
 import lv.lu.df.combopt.defsched.listbased.domain.Thesis;
 import org.apache.commons.math3.util.Pair;
 
-import static ai.timefold.solver.core.api.score.stream.ConstraintCollectors.count;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.function.Function;
+
+import static ai.timefold.solver.core.api.score.stream.ConstraintCollectors.*;
 import static ai.timefold.solver.core.api.score.stream.Joiners.equal;
 
 public class ConstraintStreamCostFunction implements ConstraintProvider {
@@ -20,8 +27,10 @@ public class ConstraintStreamCostFunction implements ConstraintProvider {
                 supervisorUnavailable(constraintFactory),
                 reviewerUnavailable(constraintFactory),
                 conflictingTimeForPerson(constraintFactory),
-                sessionsForPerson(constraintFactory)
-
+                sessionsForPerson(constraintFactory),
+                secondSessionInOneDayForPerson(constraintFactory),
+                //fairSessions(constraintFactory),
+                fairSessionsProp(constraintFactory)
         };
     }
 
@@ -31,7 +40,7 @@ public class ConstraintStreamCostFunction implements ConstraintProvider {
                 .forEach(Thesis.class)
                 .join(Person.class, equal(Thesis::getAuthor, p -> p))
                 .filter((t,p) -> !t.isAvailable(p))
-                .penalize(HardSoftScore.ONE_HARD)
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_HARD)
                 .asConstraint("Thesis with author unavailable");
     }
 
@@ -41,7 +50,7 @@ public class ConstraintStreamCostFunction implements ConstraintProvider {
                 .forEach(Thesis.class)
                 .join(Person.class, equal(Thesis::getSupervisor, p -> p))
                 .filter((t,p) -> !t.isAvailable(p))
-                .penalize(HardSoftScore.ONE_SOFT, (t,p) -> 10)
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_SOFT, (t,p) -> BigDecimal.valueOf(10))
                 .asConstraint("Thesis with supervisor unavailable");
     }
 
@@ -51,7 +60,7 @@ public class ConstraintStreamCostFunction implements ConstraintProvider {
                 .forEach(Thesis.class)
                 .join(Person.class, equal(Thesis::getReviewer, p -> p))
                 .filter((t,p) -> !t.isAvailable(p))
-                .penalize(HardSoftScore.ONE_SOFT, (t,p) -> 20)
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_SOFT, (t,p) -> BigDecimal.valueOf(20))
                 .asConstraint("Thesis with reviewer unavailable");
     }
 
@@ -64,7 +73,7 @@ public class ConstraintStreamCostFunction implements ConstraintProvider {
                         t1.getSupervisor().equals(t2.getReviewer()) ||
                         t1.getReviewer().equals(t2.getReviewer()) ||
                         t1.getReviewer().equals(t2.getSupervisor()))
-                .penalize(HardSoftScore.ONE_HARD)
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_HARD)
                 .asConstraint("Person has to attend two thesis' defence at once");
     }
 
@@ -79,12 +88,42 @@ public class ConstraintStreamCostFunction implements ConstraintProvider {
                 .map((p,th,sess) -> Pair.create(p,sess))
                 .distinct()
                 .groupBy(pair -> pair.getKey(), count())
-                .penalize(HardSoftScore.ONE_SOFT, (person, count) -> count)
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_SOFT, (person, count) -> BigDecimal.valueOf(count))
+                .indictWith((person, count) -> List.of(person))
                 .asConstraint("Session count for Person");
     }
 
     // Vēlams, lai iesaistītajam vienā dienā nav jāapmeklē vairākas sesijas.
+    public Constraint secondSessionInOneDayForPerson(ConstraintFactory constraintFactory) {
+        return constraintFactory
+                .forEachUniquePair(Thesis.class, equal(th -> th.getSession().getStartingAt().toLocalDate()))
+                .filter((th1, th2) -> !th1.getSession().equals(th2.getSession()))
+                .join(Person.class)
+                .filter((th1,th2,p) -> th1.getInvolved().contains(p) && th2.getInvolved().contains(p))
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_SOFT, (th1,th2,p)->BigDecimal.valueOf(5))
+                .asConstraint("Second Session in one day for Person");
+    }
 
-    // Nav tukši sloti starp diplomdarbiem
+    // Diplomdarbu skaits ir sabalansēts starp sesijām
+    Constraint fairSessions(ConstraintFactory constraintFactory) {
+        return constraintFactory
+                .forEach(Thesis.class)
+                .groupBy(Thesis::getSession, count())
+                .complement(Session.class, sess -> 0)
+                .groupBy(loadBalance((sess,c)->sess, (sess,c)->c))
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_MEDIUM, LoadBalance::unfairness)
+                .asConstraint("Fair Sessions");
+    }
 
+    Constraint fairSessionsProp(ConstraintFactory constraintFactory) {
+        return constraintFactory
+                .forEach(Thesis.class)
+                .groupBy(Thesis::getSession, count())
+                .complement(Session.class, sess -> 0)
+                .join(ScheduleProperties.class)
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_MEDIUM, (sess, count, props) ->
+                        BigDecimal.valueOf(Math.sqrt(Math.pow(count - props.getSessionSize(), 2))))
+                .indictWith((sess, count, props) -> List.of(sess))
+                .asConstraint("Fair Sessions From Props");
+    }
 }

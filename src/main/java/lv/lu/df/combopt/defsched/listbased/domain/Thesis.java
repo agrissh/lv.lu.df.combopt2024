@@ -2,13 +2,12 @@ package lv.lu.df.combopt.defsched.listbased.domain;
 
 import ai.timefold.solver.core.api.domain.entity.PlanningEntity;
 import ai.timefold.solver.core.api.domain.lookup.PlanningId;
-import ai.timefold.solver.core.api.domain.variable.InverseRelationShadowVariable;
-import ai.timefold.solver.core.api.domain.variable.NextElementShadowVariable;
-import ai.timefold.solver.core.api.domain.variable.PreviousElementShadowVariable;
+import ai.timefold.solver.core.api.domain.variable.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lv.lu.df.combopt.defsched.listbased.solver.PlanningVariableChangeListener;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,11 +35,31 @@ public class Thesis {
     @NextElementShadowVariable(sourceVariableName = "thesisList")
     private Thesis next;
 
+    @ShadowVariable(variableListenerClass = PlanningVariableChangeListener.class,
+             sourceVariableName = "session")
+    @ShadowVariable(variableListenerClass = PlanningVariableChangeListener.class,
+            sourceVariableName = "previous")
+    private LocalDateTime startsAt = null;
+
+    @CascadingUpdateShadowVariable(targetMethodName = "updateStartsAt")
+    private LocalDateTime cascadeStartsAt = null;
+
+    public void updateStartsAt() {
+        if (this.getSession() == null) {
+            this.setCascadeStartsAt(null);
+        } else {
+            this.setCascadeStartsAt(
+                    this.getPrevious() == null ? this.getSession().getStartingAt() :
+                            this.getPrevious().getCascadeStartsAt().plusMinutes(this.getSession().getSlotDurationMinutes())
+            );
+        }
+    }
+
     public Boolean isAvailable(Person person) {
         return !person.getTimeConstraints().stream().anyMatch(tc ->
                 this.getSession() != null &&
                         !(this.endsAt().compareTo(tc.getFrom()) <= 0
-                                || this.startsAt().compareTo(tc.getTo()) >=0));
+                                || this.getStartsAt().compareTo(tc.getTo()) >=0));
     }
 
     public List<Person> getInvolved() {
@@ -65,12 +84,12 @@ public class Thesis {
         if (this.getSession() == null) {
             return null;
         } else {
-           return this.startsAt().plusMinutes(this.getSession().getSlotDurationMinutes());
+           return this.getStartsAt().plusMinutes(this.getSession().getSlotDurationMinutes());
         }
     }
 
     public Boolean overlapsWith(Thesis th) {
-        return !(this.endsAt().compareTo(th.startsAt()) <= 0 || this.startsAt().compareTo(th.endsAt()) >=0);
+        return !(this.endsAt().compareTo(th.getStartsAt()) <= 0 || this.getStartsAt().compareTo(th.endsAt()) >=0);
     }
 
     @Override
