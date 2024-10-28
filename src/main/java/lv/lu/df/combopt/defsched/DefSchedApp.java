@@ -10,6 +10,9 @@ import ai.timefold.solver.core.api.score.stream.ConstraintProvider;
 import ai.timefold.solver.core.api.solver.SolutionManager;
 import ai.timefold.solver.core.api.solver.Solver;
 import ai.timefold.solver.core.api.solver.SolverFactory;
+import ai.timefold.solver.core.config.constructionheuristic.ConstructionHeuristicPhaseConfig;
+import ai.timefold.solver.core.config.constructionheuristic.ConstructionHeuristicType;
+import ai.timefold.solver.core.config.localsearch.LocalSearchPhaseConfig;
 import ai.timefold.solver.core.config.solver.EnvironmentMode;
 import ai.timefold.solver.core.config.solver.SolverConfig;
 import ai.timefold.solver.core.config.solver.termination.TerminationConfig;
@@ -42,6 +45,9 @@ public class DefSchedApp {
     private static void runListBased() {
         lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule problem = createExampleLB();
 
+        SolverFactory<lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule> solverFactoryFromConfigXML =
+            SolverFactory.createFromXmlResource("SolverConfig.xml");
+
         SolverFactory<lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule> solverFactory = SolverFactory.create(
                 new SolverConfig()
                         .withSolutionClass(lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule.class)
@@ -54,10 +60,12 @@ public class DefSchedApp {
         );
 
         Solver<lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule> solver = solverFactory.buildSolver();
+        //Solver<lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule> solver = solverFactoryFromConfigXML.buildSolver();
         lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule solution = solver.solve(problem);
         solution.printSchedule();
 
         SolutionManager<lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule, HardMediumSoftBigDecimalScore> solutionManager = SolutionManager.create(solverFactory);
+        //SolutionManager<lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule, HardMediumSoftBigDecimalScore> solutionManager = SolutionManager.create(solverFactoryFromConfigXML);
         LOGGER.debug(solutionManager.explain(solution).getSummary());
         //printScoreSummary(solutionManager.explain(solution));
         //ScoreAnalysis<HardSoftScore> scoreAnalysis = solutionManager.analyze(solution);

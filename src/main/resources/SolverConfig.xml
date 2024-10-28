@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<solver xmlns="https://timefold.ai/xsd/solver" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://timefold.ai/xsd/solver https://timefold.ai/xsd/solver/solver.xsd">
+    <environmentMode>FULL_ASSERT</environmentMode>
+    <solutionClass>lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule</solutionClass>
+    <entityClass>lv.lu.df.combopt.defsched.listbased.domain.Session</entityClass>
+    <entityClass>lv.lu.df.combopt.defsched.listbased.domain.Thesis</entityClass>
+    <scoreDirectorFactory>
+        <constraintProviderClass>lv.lu.df.combopt.defsched.listbased.solver.ConstraintStreamCostFunction</constraintProviderClass>
+    </scoreDirectorFactory>
+    <termination>
+        <secondsSpentLimit>5</secondsSpentLimit>
+    </termination>
+    <constructionHeuristic />
+    <localSearch>
+        <unionMoveSelector>
+            <listChangeMoveSelector />
+            <listSwapMoveSelector />
+            <!--<subListChangeMoveSelector />
+            <subListSwapMoveSelector />-->
+            <kOptListMoveSelector />
+        </unionMoveSelector>
+        <acceptor>
+            <lateAcceptanceSize>400</lateAcceptanceSize>
+        </acceptor>
+    </localSearch>
+</solver>
