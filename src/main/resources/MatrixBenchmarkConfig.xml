@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plannerBenchmark xmlns="https://timefold.ai/xsd/benchmark" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="https://timefold.ai/xsd/benchmark https://timefold.ai/xsd/benchmark/benchmark.xsd">
+    <benchmarkDirectory>benchmarkReports</benchmarkDirectory>
+
+    <inheritedSolverBenchmark>
+        <solver>
+            <environmentMode>REPRODUCIBLE</environmentMode>
+            <!-- Define the model -->
+            <solutionClass>lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule</solutionClass>
+            <entityClass>lv.lu.df.combopt.defsched.listbased.domain.Session</entityClass>
+            <entityClass>lv.lu.df.combopt.defsched.listbased.domain.Thesis</entityClass>
+
+            <!-- Define the score function -->
+            <scoreDirectorFactory>
+                <constraintProviderClass>lv.lu.df.combopt.defsched.listbased.solver.ConstraintStreamCostFunction</constraintProviderClass>
+            </scoreDirectorFactory>
+
+            <!-- Configure the optimization algorithms (optional) -->
+            <termination>
+                <secondsSpentLimit>120</secondsSpentLimit>
+            </termination>
+
+            <constructionHeuristic />
+        </solver>
+       <problemBenchmarks>
+            <solutionFileIOClass>lv.lu.df.combopt.defsched.listbased.domain.DefenseScheduleJsonIO</solutionFileIOClass>
+            <writeOutputSolutionEnabled>true</writeOutputSolutionEnabled>
+            <inputSolutionFile>data/example_80.json</inputSolutionFile>
+            <inputSolutionFile>data/example_100.json</inputSolutionFile>
+            <inputSolutionFile>data/example_150.json</inputSolutionFile>
+       </problemBenchmarks>
+        <!--<subSingleCount>5</subSingleCount>-->
+    </inheritedSolverBenchmark>
+
+    <#list [5, 7, 11, 13] as entityTabuSize>
+    <#list [500, 1000, 2000] as acceptedCountLimit>
+    <solverBenchmark>
+        <name>Tabu Search entityTabuSize ${entityTabuSize} acceptedCountLimit ${acceptedCountLimit}</name>
+        <solver>
+            <localSearch>
+                <unionMoveSelector>
+                    <subListChangeMoveSelector />
+                    <listChangeMoveSelector />
+                    <listSwapMoveSelector />
+                </unionMoveSelector>
+                <acceptor>
+                    <entityTabuSize>${entityTabuSize}</entityTabuSize>
+                </acceptor>
+                <forager>
+                    <acceptedCountLimit>${acceptedCountLimit}</acceptedCountLimit>
+                </forager>
+            </localSearch>
+        </solver>
+    </solverBenchmark>
+    </#list>
+    </#list>
+</plannerBenchmark>

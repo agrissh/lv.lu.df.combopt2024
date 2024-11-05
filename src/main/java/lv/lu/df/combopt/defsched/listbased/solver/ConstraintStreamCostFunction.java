@@ -29,8 +29,8 @@ public class ConstraintStreamCostFunction implements ConstraintProvider {
                 conflictingTimeForPerson(constraintFactory),
                 sessionsForPerson(constraintFactory),
                 secondSessionInOneDayForPerson(constraintFactory),
-                //fairSessions(constraintFactory),
-                fairSessionsProp(constraintFactory)
+                fairSessions(constraintFactory),
+                //fairSessionsProp(constraintFactory)
         };
     }
 

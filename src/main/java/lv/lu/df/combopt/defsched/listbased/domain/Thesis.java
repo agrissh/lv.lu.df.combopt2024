@@ -3,6 +3,10 @@ package lv.lu.df.combopt.defsched.listbased.domain;
 import ai.timefold.solver.core.api.domain.entity.PlanningEntity;
 import ai.timefold.solver.core.api.domain.lookup.PlanningId;
 import ai.timefold.solver.core.api.domain.variable.*;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,21 +21,30 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @PlanningEntity
+@JsonIdentityInfo(scope = Thesis.class,
+        property = "thesisId",
+        generator = ObjectIdGenerators.PropertyGenerator.class)
 public class Thesis {
     @PlanningId
     private Integer thesisId;
     private String title;
 
+    @JsonIdentityReference(alwaysAsId = true)
     private Person author;
+    @JsonIdentityReference(alwaysAsId = true)
     private Person supervisor;
+    @JsonIdentityReference(alwaysAsId = true)
     private Person reviewer;
 
     @InverseRelationShadowVariable(sourceVariableName = "thesisList")
+    @JsonIdentityReference(alwaysAsId = true)
     private Session session;
 
+    @JsonIdentityReference(alwaysAsId = true)
     @PreviousElementShadowVariable(sourceVariableName = "thesisList")
     private Thesis previous;
 
+    @JsonIdentityReference(alwaysAsId = true)
     @NextElementShadowVariable(sourceVariableName = "thesisList")
     private Thesis next;
 
@@ -62,6 +75,7 @@ public class Thesis {
                                 || this.getStartsAt().compareTo(tc.getTo()) >=0));
     }
 
+    @JsonIgnore
     public List<Person> getInvolved() {
         return List.of(author, supervisor, reviewer);
     }

@@ -1,0 +1,190 @@
+{
+  "scheduleId" : 1,
+  "persons" : [ {
+    "personId" : 3,
+    "name" : "prof. Leo Seļavo",
+    "timeConstraints" : [ {
+      "timeConstraintId" : 2,
+      "from" : [ 2025, 1, 2, 9, 30 ],
+      "to" : [ 2025, 1, 2, 23, 59, 59 ]
+    } ]
+  }, {
+    "personId" : 1,
+    "name" : "prof. Andris Ambainis",
+    "timeConstraints" : [ {
+      "timeConstraintId" : 1,
+      "from" : [ 2025, 1, 2, 10, 45 ],
+      "to" : [ 2025, 1, 2, 23, 59, 59 ]
+    } ]
+  }, {
+    "personId" : 2,
+    "name" : "prof. Juris Borzovs",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 5,
+    "name" : "prof. Karlis Podnieks",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 4,
+    "name" : "doc. Agris Šostaks",
+    "timeConstraints" : [ {
+      "timeConstraintId" : 3,
+      "from" : [ 2025, 1, 2, 8, 45 ],
+      "to" : [ 2025, 1, 2, 9, 59, 59 ]
+    } ]
+  }, {
+    "personId" : 6,
+    "name" : "prof. Laila Niedrīte",
+    "timeConstraints" : [ {
+      "timeConstraintId" : 4,
+      "from" : [ 2025, 1, 2, 9, 30 ],
+      "to" : [ 2025, 1, 2, 10, 0 ]
+    } ]
+  }, {
+    "personId" : 7,
+    "name" : "prof. Guntis Bārzdiņš",
+    "timeConstraints" : [ {
+      "timeConstraintId" : 5,
+      "from" : [ 2025, 1, 2, 10, 15 ],
+      "to" : [ 2025, 1, 2, 23, 59, 59 ]
+    } ]
+  }, {
+    "personId" : 8,
+    "name" : "Jānis Jaunsudrabiņš",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 9,
+    "name" : "Kārlis Skalbe",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 10,
+    "name" : "Rūdolfs Blaumanis",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 11,
+    "name" : "Alberts Bels",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 12,
+    "name" : "Vilis Plūdons",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 13,
+    "name" : "Andrejs Pumpurs",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 14,
+    "name" : "Aleksandrs Čaks",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 15,
+    "name" : "Vizma Belševica",
+    "timeConstraints" : [ ]
+  } ],
+  "sessions" : [ {
+    "sessionId" : 1,
+    "room" : "13",
+    "startingAt" : [ 2025, 1, 2, 9, 0 ],
+    "slotDurationMinutes" : 30,
+    "thesisList" : [ ]
+  }, {
+    "sessionId" : 2,
+    "room" : "16",
+    "startingAt" : [ 2025, 1, 2, 9, 0 ],
+    "slotDurationMinutes" : 30,
+    "thesisList" : [ ]
+  } ],
+  "thesis" : [ {
+    "thesisId" : 1,
+    "title" : "Baltā kvantu kriptogrāfija",
+    "author" : 8,
+    "supervisor" : 1,
+    "reviewer" : 2,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 2,
+    "title" : "Programmatūras kvalitātes dzirnavas",
+    "author" : 9,
+    "supervisor" : 2,
+    "reviewer" : 3,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 3,
+    "title" : "Kiberfizikālās sistēmas Silmačos",
+    "author" : 10,
+    "supervisor" : 3,
+    "reviewer" : 4,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 4,
+    "title" : "Datizrace būrī",
+    "author" : 11,
+    "supervisor" : 5,
+    "reviewer" : 1,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 5,
+    "title" : "Mazā Anduļa datu noliktavas",
+    "author" : 12,
+    "supervisor" : 6,
+    "reviewer" : 5,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 6,
+    "title" : "Tīklplēsis",
+    "author" : 13,
+    "supervisor" : 7,
+    "reviewer" : 3,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 7,
+    "title" : "Neironu skartie",
+    "author" : 14,
+    "supervisor" : 7,
+    "reviewer" : 1,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 8,
+    "title" : "Billes datu noliktavas",
+    "author" : 15,
+    "supervisor" : 6,
+    "reviewer" : 4,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  } ],
+  "score" : null,
+  "properties" : {
+    "sessionSize" : 4
+  }
+}

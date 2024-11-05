@@ -1,0 +1,1752 @@
+{
+  "scheduleId" : 1,
+  "persons" : [ {
+    "personId" : 17,
+    "name" : "P1",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 18,
+    "name" : "P2",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 19,
+    "name" : "P3",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 20,
+    "name" : "P4",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 21,
+    "name" : "P5",
+    "timeConstraints" : [ {
+      "timeConstraintId" : 22,
+      "from" : [ 2025, 1, 3, 9, 0 ],
+      "to" : [ 2025, 1, 4, 16, 0 ]
+    } ]
+  }, {
+    "personId" : 23,
+    "name" : "P6",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 24,
+    "name" : "P7",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 25,
+    "name" : "P8",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 26,
+    "name" : "P9",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 27,
+    "name" : "P10",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 28,
+    "name" : "P11",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 29,
+    "name" : "P12",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 30,
+    "name" : "P13",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 31,
+    "name" : "P14",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 32,
+    "name" : "P15",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 33,
+    "name" : "P16",
+    "timeConstraints" : [ {
+      "timeConstraintId" : 34,
+      "from" : [ 2025, 1, 5, 9, 0 ],
+      "to" : [ 2025, 1, 6, 21, 0 ]
+    } ]
+  }, {
+    "personId" : 35,
+    "name" : "P17",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 36,
+    "name" : "P18",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 37,
+    "name" : "P19",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 38,
+    "name" : "P20",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 39,
+    "name" : "P21",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 40,
+    "name" : "P22",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 41,
+    "name" : "P23",
+    "timeConstraints" : [ {
+      "timeConstraintId" : 42,
+      "from" : [ 2025, 1, 6, 9, 0 ],
+      "to" : [ 2025, 1, 6, 16, 0 ]
+    } ]
+  }, {
+    "personId" : 43,
+    "name" : "P24",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 44,
+    "name" : "P25",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 45,
+    "name" : "P26",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 46,
+    "name" : "P27",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 47,
+    "name" : "P28",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 48,
+    "name" : "P29",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 49,
+    "name" : "P30",
+    "timeConstraints" : [ {
+      "timeConstraintId" : 50,
+      "from" : [ 2025, 1, 2, 9, 0 ],
+      "to" : [ 2025, 1, 3, 15, 0 ]
+    } ]
+  }, {
+    "personId" : 51,
+    "name" : "P31",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 52,
+    "name" : "P32",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 53,
+    "name" : "P33",
+    "timeConstraints" : [ {
+      "timeConstraintId" : 54,
+      "from" : [ 2025, 1, 2, 9, 0 ],
+      "to" : [ 2025, 1, 4, 1, 0 ]
+    } ]
+  }, {
+    "personId" : 55,
+    "name" : "S1",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 57,
+    "name" : "S2",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 59,
+    "name" : "S3",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 61,
+    "name" : "S4",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 63,
+    "name" : "S5",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 65,
+    "name" : "S6",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 67,
+    "name" : "S7",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 69,
+    "name" : "S8",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 71,
+    "name" : "S9",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 73,
+    "name" : "S10",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 75,
+    "name" : "S11",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 77,
+    "name" : "S12",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 79,
+    "name" : "S13",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 81,
+    "name" : "S14",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 83,
+    "name" : "S15",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 85,
+    "name" : "S16",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 87,
+    "name" : "S17",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 89,
+    "name" : "S18",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 91,
+    "name" : "S19",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 93,
+    "name" : "S20",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 95,
+    "name" : "S21",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 97,
+    "name" : "S22",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 99,
+    "name" : "S23",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 101,
+    "name" : "S24",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 103,
+    "name" : "S25",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 105,
+    "name" : "S26",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 107,
+    "name" : "S27",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 109,
+    "name" : "S28",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 111,
+    "name" : "S29",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 113,
+    "name" : "S30",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 115,
+    "name" : "S31",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 117,
+    "name" : "S32",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 119,
+    "name" : "S33",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 121,
+    "name" : "S34",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 123,
+    "name" : "S35",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 125,
+    "name" : "S36",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 127,
+    "name" : "S37",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 129,
+    "name" : "S38",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 131,
+    "name" : "S39",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 133,
+    "name" : "S40",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 135,
+    "name" : "S41",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 137,
+    "name" : "S42",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 139,
+    "name" : "S43",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 141,
+    "name" : "S44",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 143,
+    "name" : "S45",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 145,
+    "name" : "S46",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 147,
+    "name" : "S47",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 149,
+    "name" : "S48",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 151,
+    "name" : "S49",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 153,
+    "name" : "S50",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 155,
+    "name" : "S51",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 157,
+    "name" : "S52",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 159,
+    "name" : "S53",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 161,
+    "name" : "S54",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 163,
+    "name" : "S55",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 165,
+    "name" : "S56",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 167,
+    "name" : "S57",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 169,
+    "name" : "S58",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 171,
+    "name" : "S59",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 173,
+    "name" : "S60",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 175,
+    "name" : "S61",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 177,
+    "name" : "S62",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 179,
+    "name" : "S63",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 181,
+    "name" : "S64",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 183,
+    "name" : "S65",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 185,
+    "name" : "S66",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 187,
+    "name" : "S67",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 189,
+    "name" : "S68",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 191,
+    "name" : "S69",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 193,
+    "name" : "S70",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 195,
+    "name" : "S71",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 197,
+    "name" : "S72",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 199,
+    "name" : "S73",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 201,
+    "name" : "S74",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 203,
+    "name" : "S75",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 205,
+    "name" : "S76",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 207,
+    "name" : "S77",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 209,
+    "name" : "S78",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 211,
+    "name" : "S79",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 213,
+    "name" : "S80",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 215,
+    "name" : "S81",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 217,
+    "name" : "S82",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 219,
+    "name" : "S83",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 221,
+    "name" : "S84",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 223,
+    "name" : "S85",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 225,
+    "name" : "S86",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 227,
+    "name" : "S87",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 229,
+    "name" : "S88",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 231,
+    "name" : "S89",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 233,
+    "name" : "S90",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 235,
+    "name" : "S91",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 237,
+    "name" : "S92",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 239,
+    "name" : "S93",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 241,
+    "name" : "S94",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 243,
+    "name" : "S95",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 245,
+    "name" : "S96",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 247,
+    "name" : "S97",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 249,
+    "name" : "S98",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 251,
+    "name" : "S99",
+    "timeConstraints" : [ ]
+  }, {
+    "personId" : 253,
+    "name" : "S100",
+    "timeConstraints" : [ ]
+  } ],
+  "sessions" : [ {
+    "sessionId" : 2,
+    "room" : "16",
+    "startingAt" : [ 2025, 1, 2, 9, 0 ],
+    "slotDurationMinutes" : 30,
+    "thesisList" : [ ]
+  }, {
+    "sessionId" : 3,
+    "room" : "18",
+    "startingAt" : [ 2025, 1, 2, 9, 0 ],
+    "slotDurationMinutes" : 30,
+    "thesisList" : [ ]
+  }, {
+    "sessionId" : 4,
+    "room" : "12",
+    "startingAt" : [ 2025, 1, 2, 9, 0 ],
+    "slotDurationMinutes" : 30,
+    "thesisList" : [ ]
+  }, {
+    "sessionId" : 5,
+    "room" : "16",
+    "startingAt" : [ 2025, 1, 3, 9, 0 ],
+    "slotDurationMinutes" : 30,
+    "thesisList" : [ ]
+  }, {
+    "sessionId" : 6,
+    "room" : "18",
+    "startingAt" : [ 2025, 1, 3, 9, 0 ],
+    "slotDurationMinutes" : 30,
+    "thesisList" : [ ]
+  }, {
+    "sessionId" : 7,
+    "room" : "12",
+    "startingAt" : [ 2025, 1, 3, 9, 0 ],
+    "slotDurationMinutes" : 30,
+    "thesisList" : [ ]
+  }, {
+    "sessionId" : 8,
+    "room" : "16",
+    "startingAt" : [ 2025, 1, 4, 9, 0 ],
+    "slotDurationMinutes" : 30,
+    "thesisList" : [ ]
+  }, {
+    "sessionId" : 9,
+    "room" : "18",
+    "startingAt" : [ 2025, 1, 4, 9, 0 ],
+    "slotDurationMinutes" : 30,
+    "thesisList" : [ ]
+  }, {
+    "sessionId" : 10,
+    "room" : "12",
+    "startingAt" : [ 2025, 1, 4, 9, 0 ],
+    "slotDurationMinutes" : 30,
+    "thesisList" : [ ]
+  }, {
+    "sessionId" : 11,
+    "room" : "16",
+    "startingAt" : [ 2025, 1, 5, 9, 0 ],
+    "slotDurationMinutes" : 30,
+    "thesisList" : [ ]
+  }, {
+    "sessionId" : 12,
+    "room" : "18",
+    "startingAt" : [ 2025, 1, 5, 9, 0 ],
+    "slotDurationMinutes" : 30,
+    "thesisList" : [ ]
+  }, {
+    "sessionId" : 13,
+    "room" : "12",
+    "startingAt" : [ 2025, 1, 5, 9, 0 ],
+    "slotDurationMinutes" : 30,
+    "thesisList" : [ ]
+  }, {
+    "sessionId" : 14,
+    "room" : "16",
+    "startingAt" : [ 2025, 1, 6, 9, 0 ],
+    "slotDurationMinutes" : 30,
+    "thesisList" : [ ]
+  }, {
+    "sessionId" : 15,
+    "room" : "18",
+    "startingAt" : [ 2025, 1, 6, 9, 0 ],
+    "slotDurationMinutes" : 30,
+    "thesisList" : [ ]
+  }, {
+    "sessionId" : 16,
+    "room" : "12",
+    "startingAt" : [ 2025, 1, 6, 9, 0 ],
+    "slotDurationMinutes" : 30,
+    "thesisList" : [ ]
+  } ],
+  "thesis" : [ {
+    "thesisId" : 56,
+    "title" : "T1",
+    "author" : 55,
+    "supervisor" : 51,
+    "reviewer" : 32,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 58,
+    "title" : "T2",
+    "author" : 57,
+    "supervisor" : 45,
+    "reviewer" : 53,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 60,
+    "title" : "T3",
+    "author" : 59,
+    "supervisor" : 19,
+    "reviewer" : 43,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 62,
+    "title" : "T4",
+    "author" : 61,
+    "supervisor" : 29,
+    "reviewer" : 44,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 64,
+    "title" : "T5",
+    "author" : 63,
+    "supervisor" : 32,
+    "reviewer" : 21,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 66,
+    "title" : "T6",
+    "author" : 65,
+    "supervisor" : 26,
+    "reviewer" : 51,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 68,
+    "title" : "T7",
+    "author" : 67,
+    "supervisor" : 38,
+    "reviewer" : 44,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 70,
+    "title" : "T8",
+    "author" : 69,
+    "supervisor" : 47,
+    "reviewer" : 43,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 72,
+    "title" : "T9",
+    "author" : 71,
+    "supervisor" : 20,
+    "reviewer" : 29,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 74,
+    "title" : "T10",
+    "author" : 73,
+    "supervisor" : 49,
+    "reviewer" : 36,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 76,
+    "title" : "T11",
+    "author" : 75,
+    "supervisor" : 20,
+    "reviewer" : 49,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 78,
+    "title" : "T12",
+    "author" : 77,
+    "supervisor" : 43,
+    "reviewer" : 27,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 80,
+    "title" : "T13",
+    "author" : 79,
+    "supervisor" : 35,
+    "reviewer" : 33,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 82,
+    "title" : "T14",
+    "author" : 81,
+    "supervisor" : 23,
+    "reviewer" : 28,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 84,
+    "title" : "T15",
+    "author" : 83,
+    "supervisor" : 48,
+    "reviewer" : 43,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 86,
+    "title" : "T16",
+    "author" : 85,
+    "supervisor" : 27,
+    "reviewer" : 20,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 88,
+    "title" : "T17",
+    "author" : 87,
+    "supervisor" : 20,
+    "reviewer" : 44,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 90,
+    "title" : "T18",
+    "author" : 89,
+    "supervisor" : 43,
+    "reviewer" : 28,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 92,
+    "title" : "T19",
+    "author" : 91,
+    "supervisor" : 26,
+    "reviewer" : 53,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 94,
+    "title" : "T20",
+    "author" : 93,
+    "supervisor" : 51,
+    "reviewer" : 19,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 96,
+    "title" : "T21",
+    "author" : 95,
+    "supervisor" : 21,
+    "reviewer" : 30,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 98,
+    "title" : "T22",
+    "author" : 97,
+    "supervisor" : 35,
+    "reviewer" : 40,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 100,
+    "title" : "T23",
+    "author" : 99,
+    "supervisor" : 31,
+    "reviewer" : 28,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 102,
+    "title" : "T24",
+    "author" : 101,
+    "supervisor" : 49,
+    "reviewer" : 31,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 104,
+    "title" : "T25",
+    "author" : 103,
+    "supervisor" : 47,
+    "reviewer" : 49,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 106,
+    "title" : "T26",
+    "author" : 105,
+    "supervisor" : 33,
+    "reviewer" : 30,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 108,
+    "title" : "T27",
+    "author" : 107,
+    "supervisor" : 37,
+    "reviewer" : 53,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 110,
+    "title" : "T28",
+    "author" : 109,
+    "supervisor" : 17,
+    "reviewer" : 23,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 112,
+    "title" : "T29",
+    "author" : 111,
+    "supervisor" : 19,
+    "reviewer" : 25,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 114,
+    "title" : "T30",
+    "author" : 113,
+    "supervisor" : 27,
+    "reviewer" : 53,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 116,
+    "title" : "T31",
+    "author" : 115,
+    "supervisor" : 19,
+    "reviewer" : 23,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 118,
+    "title" : "T32",
+    "author" : 117,
+    "supervisor" : 32,
+    "reviewer" : 29,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 120,
+    "title" : "T33",
+    "author" : 119,
+    "supervisor" : 38,
+    "reviewer" : 19,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 122,
+    "title" : "T34",
+    "author" : 121,
+    "supervisor" : 28,
+    "reviewer" : 52,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 124,
+    "title" : "T35",
+    "author" : 123,
+    "supervisor" : 24,
+    "reviewer" : 31,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 126,
+    "title" : "T36",
+    "author" : 125,
+    "supervisor" : 47,
+    "reviewer" : 40,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 128,
+    "title" : "T37",
+    "author" : 127,
+    "supervisor" : 53,
+    "reviewer" : 26,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 130,
+    "title" : "T38",
+    "author" : 129,
+    "supervisor" : 29,
+    "reviewer" : 19,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 132,
+    "title" : "T39",
+    "author" : 131,
+    "supervisor" : 26,
+    "reviewer" : 46,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 134,
+    "title" : "T40",
+    "author" : 133,
+    "supervisor" : 19,
+    "reviewer" : 49,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 136,
+    "title" : "T41",
+    "author" : 135,
+    "supervisor" : 23,
+    "reviewer" : 52,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 138,
+    "title" : "T42",
+    "author" : 137,
+    "supervisor" : 29,
+    "reviewer" : 31,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 140,
+    "title" : "T43",
+    "author" : 139,
+    "supervisor" : 51,
+    "reviewer" : 46,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 142,
+    "title" : "T44",
+    "author" : 141,
+    "supervisor" : 46,
+    "reviewer" : 37,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 144,
+    "title" : "T45",
+    "author" : 143,
+    "supervisor" : 44,
+    "reviewer" : 49,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 146,
+    "title" : "T46",
+    "author" : 145,
+    "supervisor" : 51,
+    "reviewer" : 30,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 148,
+    "title" : "T47",
+    "author" : 147,
+    "supervisor" : 36,
+    "reviewer" : 40,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 150,
+    "title" : "T48",
+    "author" : 149,
+    "supervisor" : 26,
+    "reviewer" : 48,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 152,
+    "title" : "T49",
+    "author" : 151,
+    "supervisor" : 46,
+    "reviewer" : 52,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 154,
+    "title" : "T50",
+    "author" : 153,
+    "supervisor" : 33,
+    "reviewer" : 35,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 156,
+    "title" : "T51",
+    "author" : 155,
+    "supervisor" : 18,
+    "reviewer" : 44,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 158,
+    "title" : "T52",
+    "author" : 157,
+    "supervisor" : 30,
+    "reviewer" : 27,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 160,
+    "title" : "T53",
+    "author" : 159,
+    "supervisor" : 25,
+    "reviewer" : 49,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 162,
+    "title" : "T54",
+    "author" : 161,
+    "supervisor" : 17,
+    "reviewer" : 48,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 164,
+    "title" : "T55",
+    "author" : 163,
+    "supervisor" : 28,
+    "reviewer" : 53,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 166,
+    "title" : "T56",
+    "author" : 165,
+    "supervisor" : 31,
+    "reviewer" : 30,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 168,
+    "title" : "T57",
+    "author" : 167,
+    "supervisor" : 43,
+    "reviewer" : 18,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 170,
+    "title" : "T58",
+    "author" : 169,
+    "supervisor" : 21,
+    "reviewer" : 53,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 172,
+    "title" : "T59",
+    "author" : 171,
+    "supervisor" : 44,
+    "reviewer" : 21,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 174,
+    "title" : "T60",
+    "author" : 173,
+    "supervisor" : 41,
+    "reviewer" : 24,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 176,
+    "title" : "T61",
+    "author" : 175,
+    "supervisor" : 48,
+    "reviewer" : 39,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 178,
+    "title" : "T62",
+    "author" : 177,
+    "supervisor" : 48,
+    "reviewer" : 29,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 180,
+    "title" : "T63",
+    "author" : 179,
+    "supervisor" : 47,
+    "reviewer" : 32,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 182,
+    "title" : "T64",
+    "author" : 181,
+    "supervisor" : 44,
+    "reviewer" : 31,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 184,
+    "title" : "T65",
+    "author" : 183,
+    "supervisor" : 36,
+    "reviewer" : 18,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 186,
+    "title" : "T66",
+    "author" : 185,
+    "supervisor" : 30,
+    "reviewer" : 33,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 188,
+    "title" : "T67",
+    "author" : 187,
+    "supervisor" : 38,
+    "reviewer" : 28,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 190,
+    "title" : "T68",
+    "author" : 189,
+    "supervisor" : 52,
+    "reviewer" : 18,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 192,
+    "title" : "T69",
+    "author" : 191,
+    "supervisor" : 46,
+    "reviewer" : 28,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 194,
+    "title" : "T70",
+    "author" : 193,
+    "supervisor" : 44,
+    "reviewer" : 35,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 196,
+    "title" : "T71",
+    "author" : 195,
+    "supervisor" : 53,
+    "reviewer" : 18,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 198,
+    "title" : "T72",
+    "author" : 197,
+    "supervisor" : 35,
+    "reviewer" : 17,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 200,
+    "title" : "T73",
+    "author" : 199,
+    "supervisor" : 36,
+    "reviewer" : 53,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 202,
+    "title" : "T74",
+    "author" : 201,
+    "supervisor" : 31,
+    "reviewer" : 37,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 204,
+    "title" : "T75",
+    "author" : 203,
+    "supervisor" : 19,
+    "reviewer" : 35,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 206,
+    "title" : "T76",
+    "author" : 205,
+    "supervisor" : 40,
+    "reviewer" : 36,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 208,
+    "title" : "T77",
+    "author" : 207,
+    "supervisor" : 29,
+    "reviewer" : 37,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 210,
+    "title" : "T78",
+    "author" : 209,
+    "supervisor" : 49,
+    "reviewer" : 29,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 212,
+    "title" : "T79",
+    "author" : 211,
+    "supervisor" : 24,
+    "reviewer" : 30,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 214,
+    "title" : "T80",
+    "author" : 213,
+    "supervisor" : 25,
+    "reviewer" : 24,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 216,
+    "title" : "T81",
+    "author" : 215,
+    "supervisor" : 44,
+    "reviewer" : 35,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 218,
+    "title" : "T82",
+    "author" : 217,
+    "supervisor" : 41,
+    "reviewer" : 47,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 220,
+    "title" : "T83",
+    "author" : 219,
+    "supervisor" : 20,
+    "reviewer" : 36,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 222,
+    "title" : "T84",
+    "author" : 221,
+    "supervisor" : 18,
+    "reviewer" : 46,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 224,
+    "title" : "T85",
+    "author" : 223,
+    "supervisor" : 32,
+    "reviewer" : 18,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 226,
+    "title" : "T86",
+    "author" : 225,
+    "supervisor" : 19,
+    "reviewer" : 41,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 228,
+    "title" : "T87",
+    "author" : 227,
+    "supervisor" : 52,
+    "reviewer" : 17,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 230,
+    "title" : "T88",
+    "author" : 229,
+    "supervisor" : 35,
+    "reviewer" : 28,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 232,
+    "title" : "T89",
+    "author" : 231,
+    "supervisor" : 39,
+    "reviewer" : 25,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 234,
+    "title" : "T90",
+    "author" : 233,
+    "supervisor" : 19,
+    "reviewer" : 46,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 236,
+    "title" : "T91",
+    "author" : 235,
+    "supervisor" : 17,
+    "reviewer" : 37,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 238,
+    "title" : "T92",
+    "author" : 237,
+    "supervisor" : 40,
+    "reviewer" : 18,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 240,
+    "title" : "T93",
+    "author" : 239,
+    "supervisor" : 35,
+    "reviewer" : 43,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 242,
+    "title" : "T94",
+    "author" : 241,
+    "supervisor" : 33,
+    "reviewer" : 19,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 244,
+    "title" : "T95",
+    "author" : 243,
+    "supervisor" : 28,
+    "reviewer" : 46,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 246,
+    "title" : "T96",
+    "author" : 245,
+    "supervisor" : 46,
+    "reviewer" : 49,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 248,
+    "title" : "T97",
+    "author" : 247,
+    "supervisor" : 29,
+    "reviewer" : 33,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 250,
+    "title" : "T98",
+    "author" : 249,
+    "supervisor" : 20,
+    "reviewer" : 25,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 252,
+    "title" : "T99",
+    "author" : 251,
+    "supervisor" : 48,
+    "reviewer" : 41,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  }, {
+    "thesisId" : 254,
+    "title" : "T100",
+    "author" : 253,
+    "supervisor" : 27,
+    "reviewer" : 20,
+    "session" : null,
+    "previous" : null,
+    "next" : null,
+    "startsAt" : null,
+    "cascadeStartsAt" : null
+  } ],
+  "score" : null,
+  "properties" : {
+    "sessionSize" : 8
+  }
+}

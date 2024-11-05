@@ -16,6 +16,8 @@ import ai.timefold.solver.core.config.localsearch.LocalSearchPhaseConfig;
 import ai.timefold.solver.core.config.solver.EnvironmentMode;
 import ai.timefold.solver.core.config.solver.SolverConfig;
 import ai.timefold.solver.core.config.solver.termination.TerminationConfig;
+import lv.lu.df.combopt.defsched.listbased.domain.DefenseScheduleJsonIO;
+import lv.lu.df.combopt.defsched.listbased.domain.ScheduleProperties;
 import lv.lu.df.combopt.defsched.listbased.domain.TimeConstraint;
 import lv.lu.df.combopt.defsched.slotbased.domain.*;
 import lv.lu.df.combopt.defsched.slotbased.solver.ConstraintStreamCostFunction;
@@ -23,14 +25,31 @@ import lv.lu.df.combopt.defsched.slotbased.solver.EasyCostFunction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class DefSchedApp {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefSchedApp.class);
+    private static final Integer MAX_DAY_COUNT = 5;
+    private static final Integer MAX_SESSION_SIZE = 8;
+    private static final Integer SLOT_DURATION = 30; // minutes
+    private static Integer ID = 0;
+    private static Integer getID() {
+        ID++;
+        return ID;
+    }
+
+    private static Random random = new Random();
+
+    private static double getRandomNumber() {
+        return random.nextDouble();
+    }
     public static void main(String[] args) {
         //System.out.println("Hello Comb Opt!");
         LOGGER.info("App started!");
@@ -43,8 +62,13 @@ public class DefSchedApp {
     }
 
     private static void runListBased() {
-        lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule problem = createExampleLB();
-
+        //lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule problem = createExampleLB();
+        lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule problem = generateExampleLB(150);
+        lv.lu.df.combopt.defsched.listbased.domain.DefenseScheduleJsonIO io =
+                new lv.lu.df.combopt.defsched.listbased.domain.DefenseScheduleJsonIO();
+        io.write(problem, new File("data/example_150.json"));
+        lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule problem2 =
+                io.read(new File("data/example_150.json"));
         SolverFactory<lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule> solverFactoryFromConfigXML =
             SolverFactory.createFromXmlResource("SolverConfig.xml");
 
@@ -59,10 +83,12 @@ public class DefSchedApp {
                         .withEnvironmentMode(EnvironmentMode.FULL_ASSERT)
         );
 
-        Solver<lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule> solver = solverFactory.buildSolver();
-        //Solver<lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule> solver = solverFactoryFromConfigXML.buildSolver();
-        lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule solution = solver.solve(problem);
+        //Solver<lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule> solver = solverFactory.buildSolver();
+        Solver<lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule> solver = solverFactoryFromConfigXML.buildSolver();
+        lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule solution =
+                solver.solve(problem2);
         solution.printSchedule();
+        //io.write(solution, new File("data/example_8_solution.json"));
 
         SolutionManager<lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule, HardMediumSoftBigDecimalScore> solutionManager = SolutionManager.create(solverFactory);
         //SolutionManager<lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule, HardMediumSoftBigDecimalScore> solutionManager = SolutionManager.create(solverFactoryFromConfigXML);
@@ -208,7 +234,78 @@ public class DefSchedApp {
         return schedule1;
     }
 
-    private static lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule createExampleLB() {
+    private static lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule generateExampleLB(Integer N) {
+        // N - number of thesis. We want to split works in sessions with no more than MAX_SESSION_SIZE theses.
+        // N div MAX_DAY_COUNT ---> thesis every day ... if
+        int DAILY_N = N / MAX_DAY_COUNT + 1;
+        int DAILY_SESSION_N = DAILY_N / MAX_SESSION_SIZE + 1;
+        List<LocalDateTime> DAYS = List.of(
+                LocalDateTime.of(2025, Month.JANUARY, 2, 9, 0, 0),
+                LocalDateTime.of(2025, Month.JANUARY, 3, 9, 0, 0),
+                LocalDateTime.of(2025, Month.JANUARY, 4, 9, 0, 0),
+                LocalDateTime.of(2025, Month.JANUARY, 5, 9, 0, 0),
+                LocalDateTime.of(2025, Month.JANUARY, 6, 9, 0, 0));
+        List<String> ROOMS = List.of("13", "16", "18", "12", "14");
+        lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule problem = new lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule();
+        problem.setScheduleId(getID());
+
+        ScheduleProperties props = new ScheduleProperties();
+        problem.setProperties(props);
+        props.setSessionSize(MAX_SESSION_SIZE);
+
+
+        for (LocalDateTime day : DAYS) {
+            for (int i = 1; i<=DAILY_SESSION_N; i++) {
+                lv.lu.df.combopt.defsched.listbased.domain.Session session =
+                        new lv.lu.df.combopt.defsched.listbased.domain.Session();
+                session.setRoom(ROOMS.get(i));
+                session.setSessionId(getID());
+                session.setStartingAt(day);
+                session.setSlotDurationMinutes(SLOT_DURATION);
+                problem.getSessions().add(session);
+            }
+        }
+
+        List<lv.lu.df.combopt.defsched.listbased.domain.Person> profs = new ArrayList<>();
+        for (int i=1; i<=N / 3;i++) {
+            lv.lu.df.combopt.defsched.listbased.domain.Person prof =
+                    new lv.lu.df.combopt.defsched.listbased.domain.Person(getID(), "P" + i, new ArrayList<>());
+            if (getRandomNumber() > 0.7) {
+                LocalDateTime tc_from = DAYS.get(random.nextInt(DAYS.size()));
+                TimeConstraint tc = new TimeConstraint(getID(),
+                        tc_from,
+                        tc_from.plusHours(random.nextInt(6, 48)));
+                prof.getTimeConstraints().add(tc);
+            }
+            problem.getPersons().add(prof);
+            profs.add(prof);
+        }
+
+
+        for (int i = 1; i<=N; i++) {
+            // Student
+            lv.lu.df.combopt.defsched.listbased.domain.Person stud =
+                    new lv.lu.df.combopt.defsched.listbased.domain.Person(getID(), "S" + i, List.of());
+            problem.getPersons().add(stud);
+
+            lv.lu.df.combopt.defsched.listbased.domain.Person sup = profs.get(random.nextInt(profs.size()));
+            lv.lu.df.combopt.defsched.listbased.domain.Person rev = profs.get(random.nextInt(profs.size()));
+            while (sup.equals(rev)) {
+                rev = profs.get(random.nextInt(profs.size()));
+            }
+            // Thesis
+            lv.lu.df.combopt.defsched.listbased.domain.Thesis thesis =
+                    new lv.lu.df.combopt.defsched.listbased.domain.Thesis(getID(), "T" + i, stud,
+                            sup,
+                            rev,
+                            null, null, null, null, null);
+
+            problem.getThesis().add(thesis);
+        }
+        return problem;
+    }
+
+    public static lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule createExampleLB() {
         lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule schedule1 = new lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule();
         schedule1.setScheduleId(1);
 
@@ -259,14 +356,14 @@ public class DefSchedApp {
         schedule1.getPersons().addAll(List.of(profSelavo, profAmbainis, profBorzovs, profPodnieks,
                 docSostaks, profNiedrite, profBarzdins));
 
-        lv.lu.df.combopt.defsched.listbased.domain.Person stud1 = new lv.lu.df.combopt.defsched.listbased.domain.Person(6, "Jānis Jaunsudrabiņš", List.of());
-        lv.lu.df.combopt.defsched.listbased.domain.Person stud2 = new lv.lu.df.combopt.defsched.listbased.domain.Person(7, "Kārlis Skalbe", List.of());
-        lv.lu.df.combopt.defsched.listbased.domain.Person stud3 = new lv.lu.df.combopt.defsched.listbased.domain.Person(8, "Rūdolfs Blaumanis", List.of());
-        lv.lu.df.combopt.defsched.listbased.domain.Person stud4 = new lv.lu.df.combopt.defsched.listbased.domain.Person(9, "Alberts Bels", List.of());
-        lv.lu.df.combopt.defsched.listbased.domain.Person stud5 = new lv.lu.df.combopt.defsched.listbased.domain.Person(10, "Vilis Plūdons", List.of());
-        lv.lu.df.combopt.defsched.listbased.domain.Person stud6 = new lv.lu.df.combopt.defsched.listbased.domain.Person(11, "Andrejs Pumpurs", List.of());
-        lv.lu.df.combopt.defsched.listbased.domain.Person stud7 = new lv.lu.df.combopt.defsched.listbased.domain.Person(12, "Aleksandrs Čaks", List.of());
-        lv.lu.df.combopt.defsched.listbased.domain.Person stud8 = new lv.lu.df.combopt.defsched.listbased.domain.Person(13, "Vizma Belševica", List.of());
+        lv.lu.df.combopt.defsched.listbased.domain.Person stud1 = new lv.lu.df.combopt.defsched.listbased.domain.Person(8, "Jānis Jaunsudrabiņš", List.of());
+        lv.lu.df.combopt.defsched.listbased.domain.Person stud2 = new lv.lu.df.combopt.defsched.listbased.domain.Person(9, "Kārlis Skalbe", List.of());
+        lv.lu.df.combopt.defsched.listbased.domain.Person stud3 = new lv.lu.df.combopt.defsched.listbased.domain.Person(10, "Rūdolfs Blaumanis", List.of());
+        lv.lu.df.combopt.defsched.listbased.domain.Person stud4 = new lv.lu.df.combopt.defsched.listbased.domain.Person(11, "Alberts Bels", List.of());
+        lv.lu.df.combopt.defsched.listbased.domain.Person stud5 = new lv.lu.df.combopt.defsched.listbased.domain.Person(12, "Vilis Plūdons", List.of());
+        lv.lu.df.combopt.defsched.listbased.domain.Person stud6 = new lv.lu.df.combopt.defsched.listbased.domain.Person(13, "Andrejs Pumpurs", List.of());
+        lv.lu.df.combopt.defsched.listbased.domain.Person stud7 = new lv.lu.df.combopt.defsched.listbased.domain.Person(14, "Aleksandrs Čaks", List.of());
+        lv.lu.df.combopt.defsched.listbased.domain.Person stud8 = new lv.lu.df.combopt.defsched.listbased.domain.Person(15, "Vizma Belševica", List.of());
 
         schedule1.getPersons().addAll(List.of(stud1, stud2, stud3, stud4, stud5, stud6, stud7, stud8));
 
