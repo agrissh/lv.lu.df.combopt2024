@@ -36,8 +36,8 @@ public class Thesis {
     @JsonIdentityReference(alwaysAsId = true)
     private Person reviewer;
 
-    @InverseRelationShadowVariable(sourceVariableName = "thesisList")
     @JsonIdentityReference(alwaysAsId = true)
+    @InverseRelationShadowVariable(sourceVariableName = "thesisList")
     private Session session;
 
     @JsonIdentityReference(alwaysAsId = true)

@@ -6,6 +6,7 @@ import ai.timefold.solver.core.api.domain.valuerange.ValueRangeProvider;
 import ai.timefold.solver.core.api.score.buildin.hardmediumsoftbigdecimal.HardMediumSoftBigDecimalScore;
 import ai.timefold.solver.core.api.score.buildin.hardsoft.HardSoftScore;
 import ai.timefold.solver.core.api.score.buildin.hardsoftbigdecimal.HardSoftBigDecimalScore;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import lombok.*;
 import org.apache.commons.math3.util.Pair;
 import org.slf4j.Logger;
@@ -29,6 +30,7 @@ public class DefenseSchedule {
     @PlanningEntityCollectionProperty
     private List<Session> sessions = new ArrayList<>();
 
+    @JsonIdentityReference(alwaysAsId = false)
     @PlanningEntityCollectionProperty
     @ValueRangeProvider(id = "theses")
     private List<Thesis> thesis = new ArrayList<>();

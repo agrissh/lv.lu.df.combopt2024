@@ -88,6 +88,7 @@ public class ConstraintStreamCostFunction implements ConstraintProvider {
                 .map((p,th,sess) -> Pair.create(p,sess))
                 .distinct()
                 .groupBy(pair -> pair.getKey(), count())
+                .filter((p,c)->c>1)
                 .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_SOFT, (person, count) -> BigDecimal.valueOf(count))
                 .indictWith((person, count) -> List.of(person))
                 .asConstraint("Session count for Person");

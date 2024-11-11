@@ -3,7 +3,9 @@ package lv.lu.df.combopt.defsched.listbased.domain;
 import ai.timefold.solver.core.api.domain.entity.PlanningEntity;
 import ai.timefold.solver.core.api.domain.lookup.PlanningId;
 import ai.timefold.solver.core.api.domain.variable.PlanningListVariable;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +19,9 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(scope = Session.class,
+        property = "sessionId",
+        generator = ObjectIdGenerators.PropertyGenerator.class)
 @PlanningEntity
 public class Session {
     @PlanningId
@@ -26,7 +31,6 @@ public class Session {
     private Integer slotDurationMinutes;
 
     @PlanningListVariable(valueRangeProviderRefs = "theses")
-    @JsonIdentityReference()
     private List<Thesis> thesisList = new ArrayList<>();
     @Override
     public String toString() {
