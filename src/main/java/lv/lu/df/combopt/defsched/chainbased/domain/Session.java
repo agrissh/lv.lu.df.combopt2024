@@ -2,11 +2,14 @@ package lv.lu.df.combopt.defsched.chainbased.domain;
 
 import ai.timefold.solver.core.api.domain.entity.PlanningEntity;
 import ai.timefold.solver.core.api.domain.lookup.PlanningId;
+import ai.timefold.solver.core.api.domain.solution.PlanningEntityCollectionProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,6 +20,8 @@ public class Session extends TimedEvent {
     private String room;
     private Integer slotDurationMinutes;
     private LocalDateTime sessionStart;
+
+    private List<SessionMember> members = new ArrayList<>();
 
     public LocalDateTime startsAt() {
         return sessionStart;
@@ -30,6 +35,20 @@ public class Session extends TimedEvent {
             next = next.getNext();
         }
         return endsAt;
+    }
+
+    public Boolean containsThesis(Thesis th) {
+        Thesis it = this.getNext();
+        while (it != null) {
+            if (th.equals(it)) return true;
+            it = it.getNext();
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        return this.getSessionStart().toString() + " " + this.getRoom();
     }
 }
 

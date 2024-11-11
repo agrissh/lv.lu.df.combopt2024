@@ -2,10 +2,7 @@ package lv.lu.df.combopt.defsched.chainbased.domain;
 
 import ai.timefold.solver.core.api.domain.entity.PlanningEntity;
 import ai.timefold.solver.core.api.domain.lookup.PlanningId;
-import ai.timefold.solver.core.api.domain.variable.AnchorShadowVariable;
-import ai.timefold.solver.core.api.domain.variable.PlanningVariable;
-import ai.timefold.solver.core.api.domain.variable.PlanningVariableGraphType;
-import ai.timefold.solver.core.api.domain.variable.ShadowVariable;
+import ai.timefold.solver.core.api.domain.variable.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +10,7 @@ import lombok.Setter;
 import lv.lu.df.combopt.defsched.chainbased.solver.PlanningVariableChangeListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -39,7 +37,18 @@ public class Thesis extends TimedEvent {
     //        sourceVariableName = "session")
     @ShadowVariable(variableListenerClass = PlanningVariableChangeListener.class,
             sourceVariableName = "prev")
+    //@CascadingUpdateShadowVariable(targetMethodName = "updateStartTime")
     private LocalDateTime startsAt;
+
+    private Program program;
+
+    private void updateStartTime() {
+        if (this.getPrev() == null) {
+            this.startsAt = null;
+        } else {
+            this.startsAt = this.getPrev() instanceof Session ? this.getPrev().startsAt() : this.getPrev().endsAt();
+        }
+    }
 
     public LocalDateTime startsAt() {
         return this.getStartsAt();
@@ -57,5 +66,17 @@ public class Thesis extends TimedEvent {
                 this.getPrev() != null &&
                         !(this.endsAt().compareTo(tc.getFrom()) <= 0
                                 || this.startsAt().compareTo(tc.getTo()) >=0));
+    }
+
+    public Boolean overlapsWith(Thesis th) {
+        return !(this.endsAt().compareTo(th.getStartsAt()) <= 0 || this.getStartsAt().compareTo(th.endsAt()) >=0);
+    }
+
+    public List<Person> getInvolved() {
+        return List.of(author, supervisor, reviewer);
+    }
+
+    public String toString() {
+        return this.title;
     }
 }

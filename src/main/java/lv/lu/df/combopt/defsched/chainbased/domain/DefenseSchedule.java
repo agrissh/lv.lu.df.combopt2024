@@ -7,6 +7,7 @@ import ai.timefold.solver.core.api.domain.solution.PlanningSolution;
 import ai.timefold.solver.core.api.domain.solution.ProblemFactCollectionProperty;
 import ai.timefold.solver.core.api.domain.valuerange.ValueRangeProvider;
 import ai.timefold.solver.core.api.score.buildin.hardmediumsoft.HardMediumSoftScore;
+import ai.timefold.solver.core.api.score.buildin.hardmediumsoftbigdecimal.HardMediumSoftBigDecimalScore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,8 +37,18 @@ public class DefenseSchedule {
     @ValueRangeProvider(id = "theses")
     private List<Thesis> thesis = new ArrayList<>();
 
+    @ProblemFactCollectionProperty
+    @ValueRangeProvider(id = "members")
+    public List<Member> members = new ArrayList<>();
+
+    @ProblemFactCollectionProperty
+    private List<Program> programs = new ArrayList<>();
+
+    @PlanningEntityCollectionProperty
+    private List<SessionMember> sessionMembers = new ArrayList<>();
+
     @PlanningScore
-    private HardMediumSoftScore score;
+    private HardMediumSoftBigDecimalScore score;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(lv.lu.df.combopt.defsched.chainbased.domain.DefenseSchedule.class);
     public void printSchedule() {
@@ -48,6 +59,10 @@ public class DefenseSchedule {
         sessions.forEach(session -> {
             LOGGER.info("SESSION " + session.getSessionId() + " in room " + session.getRoom() + " starts at " +
                     session.startsAt());
+            session.getMembers().stream().forEach(m -> {
+                Person person = this.getPersons().stream().filter(p -> p.getMembership().contains(m.getAssignedMember())).findFirst().get();
+                LOGGER.info("   " + m.getRequiredRole() + " : " + person.getName() + " " + m.getAssignedMember().getRole());
+            });
             Thesis th = session.getNext();
             while (th != null) {
                 LOGGER.info("   Starts at: " + th.getStartsAt().toLocalTime().toString() + /*" cascade: " +

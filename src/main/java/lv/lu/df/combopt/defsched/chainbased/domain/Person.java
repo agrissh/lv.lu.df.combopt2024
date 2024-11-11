@@ -20,6 +20,8 @@ public class Person {
     @ProblemFactCollectionProperty
     private List<TimeConstraint> timeConstraints = new ArrayList<>();
 
+    private List<Member> membership;
+
     @Override
     public String toString() {
         return this.getName();
