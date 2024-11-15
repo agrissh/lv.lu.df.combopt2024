@@ -60,7 +60,7 @@ public class ConstraintStreamCostFunction implements ConstraintProvider {
                 .forEach(Thesis.class)
                 .join(Person.class, equal(Thesis::getReviewer, p -> p))
                 .filter((t,p) -> !t.isAvailable(p))
-                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_SOFT, (t,p) -> BigDecimal.valueOf(20))
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_HARD, (t,p) -> BigDecimal.valueOf(20))
                 .asConstraint("Thesis with reviewer unavailable");
     }
 
