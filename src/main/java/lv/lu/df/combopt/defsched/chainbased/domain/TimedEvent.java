@@ -23,4 +23,8 @@ public class TimedEvent {
     public LocalDateTime endsAt() {
         return null;
     }
+
+    public Boolean overlapsWith(TimedEvent event) {
+        return !(this.endsAt().compareTo(event.startsAt()) <= 0 || this.startsAt().compareTo(event.endsAt()) >=0);
+    }
 }

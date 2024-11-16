@@ -10,6 +10,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -31,7 +32,7 @@ public class Session extends TimedEvent {
         LocalDateTime endsAt = this.startsAt();
         Thesis next = this.getNext();
         while (next != null) {
-            endsAt.plusMinutes(slotDurationMinutes);
+            endsAt = endsAt.plusMinutes(slotDurationMinutes);
             next = next.getNext();
         }
         return endsAt;
@@ -44,6 +45,10 @@ public class Session extends TimedEvent {
             it = it.getNext();
         }
         return false;
+    }
+
+    public List<Member> members() {
+        return this.getMembers().stream().map(SessionMember::getAssignedMember).collect(Collectors.toList());
     }
 
     @Override

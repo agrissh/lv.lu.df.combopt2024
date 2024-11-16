@@ -58,7 +58,7 @@ public class DefenseSchedule {
 
         sessions.forEach(session -> {
             LOGGER.info("SESSION " + session.getSessionId() + " in room " + session.getRoom() + " starts at " +
-                    session.startsAt());
+                    session.startsAt() + " && ends at " + session.endsAt());
             session.getMembers().stream().forEach(m -> {
                 Person person = this.getPersons().stream().filter(p -> p.getMembership().contains(m.getAssignedMember())).findFirst().get();
                 LOGGER.info("   " + m.getRequiredRole() + " : " + person.getName() + " " + m.getAssignedMember().getRole());

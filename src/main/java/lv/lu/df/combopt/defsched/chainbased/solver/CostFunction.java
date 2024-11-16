@@ -30,11 +30,15 @@ public class CostFunction implements ConstraintProvider {
                 fairSessions(constraintFactory),
 
                 wrongRoleForMember(constraintFactory),
-                notUniqueMember(constraintFactory)
+                notUniqueMember(constraintFactory),
+                memberUnavailable(constraintFactory),
+                conflictingTimeForMember(constraintFactory),
+                conflictingSessionsForMember(constraintFactory)
         };
     }
 
     private Constraint authorUnavailable(ConstraintFactory constraintFactory) {
+        // Autoram jātiek!!!!
         return constraintFactory
                 .forEach(Thesis.class)
                 .join(Person.class, equal(Thesis::getAuthor, p -> p))
@@ -63,17 +67,68 @@ public class CostFunction implements ConstraintProvider {
                 .asConstraint("Thesis with reviewer unavailable");
     }
 
+    public Constraint memberUnavailable(ConstraintFactory constraintFactory) {
+        // Komisijas loceklim jātiek uz aizstāvēšanos!
+        return constraintFactory
+                .forEach(SessionMember.class)
+                .join(Person.class, Joiners.filtering((sm,p)->p.getMembership().contains(sm.getAssignedMember())))
+                .join(Session.class, Joiners.filtering((sm,p,sess)->sess.getMembers().contains(sm)))
+                .join(Thesis.class, Joiners.filtering((sm,p,sess,th)->th.getSession().equals(sess) &&
+                        !th.isAvailable(p)))
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_HARD)
+                .indictWith((sm,p,sess,th)->List.of(sess, p, th))
+                .asConstraint("Session with member unavailable");
+    }
+
     public Constraint conflictingTimeForPerson(ConstraintFactory constraintFactory) {
-        // Iesaistītais netiek uz aizstāvēšanos arī tad, ja viņam ir jāveic pienākumi tanī pašā laikā citā sesijā.
+        // Vadītājs vai recenzents netiek uz aizstāvēšanos arī tad, ja viņam ir jāveic šādi pienākumi tanī pašā laikā citā sesijā.
         return constraintFactory
                 .forEachUniquePair(Thesis.class)
                 .filter((t1, t2) -> t1.overlapsWith(t2))
+                // TODO: Teorētiski var gadīties, ka vadītājs var aizstāvēt darbu citā programmā ...
                 .filter((t1, t2) -> t1.getSupervisor().equals(t2.getSupervisor()) ||
                         t1.getSupervisor().equals(t2.getReviewer()) ||
                         t1.getReviewer().equals(t2.getReviewer()) ||
                         t1.getReviewer().equals(t2.getSupervisor()))
                 .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_HARD)
                 .asConstraint("Person has to attend two thesis' defence at once");
+    }
+
+    public Constraint conflictingTimeForMember_old(ConstraintFactory constraintFactory) {
+        // Komisijas loceklis netiek uz aizstāvēšanos arī tad, ja viņam ir jāveic recenzenta vai vadītāja tanī pašā laikā citā sesijā.
+        return constraintFactory
+                .forEach(Thesis.class)
+                .join(Session.class, Joiners.filtering((th,sess) -> !th.getSession().equals(sess)
+                        && th.overlapsWith(sess)))
+                .join(SessionMember.class, Joiners.filtering((th,sess,sm) -> sess.getMembers().contains(sm)))
+                .filter((th,sess,sm)->th.getInvolved().stream().anyMatch(p -> p.getMembership().stream().anyMatch(m -> m.equals(sm.getAssignedMember()))))
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_HARD)
+                .asConstraint("Member has to attend two thesis' defence at once");
+    }
+
+    public Constraint conflictingTimeForMember(ConstraintFactory constraintFactory) {
+        // Komisijas loceklis netiek uz aizstāvēšanos arī tad, ja viņam ir jāveic recenzenta vai vadītāja tanī pašā laikā citā sesijā.
+        return constraintFactory
+                .forEach(Thesis.class)
+                //TODO: using overlapsWith causes ScoreCorruption!
+                .join(Session.class, Joiners.filtering((th,sess) -> !th.getSession().equals(sess)
+                        && th.overlapsWith(sess)))
+                .join(SessionMember.class, Joiners.filtering((th,sess,sm) -> sess.getMembers().contains(sm)))
+                .filter((th,sess,sm)->th.getInvolved().stream().anyMatch(p -> p.getMembership().stream().anyMatch(m -> m.equals(sm.getAssignedMember()))))
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_HARD)
+                .asConstraint("Member has to attend two thesis' defence at once");
+    }
+
+    public Constraint conflictingSessionsForMember(ConstraintFactory constraintFactory) {
+        return constraintFactory
+                // TODO: Jāpārbauda nevis Member ekvivalenci, bet gan Person (Ja ir vairākas komisijas)
+                .forEachUniquePair(SessionMember.class, equal(SessionMember::getAssignedMember))
+                .join(Session.class)
+                .filter((sm1,sm2,sess)->sess.getMembers().contains(sm1))
+                .ifExists(Session.class, Joiners.filtering((sm1,sm2,sess1,sess2)->!sess1.equals(sess2) && sess1.overlapsWith(sess2) && sess2.getMembers().contains(sm2)))
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_HARD)
+                .asConstraint("Parallel commissions");
+
     }
 
     //// Vēlams, lai iesaistītajam būtu jāapmeklē pēc iespējas mazāk sesiju.
@@ -87,6 +142,7 @@ public class CostFunction implements ConstraintProvider {
                 .map((p, th, sess) -> Pair.create(p, sess))
                 .distinct()
                 .groupBy(pair -> pair.getKey(), count())
+                .filter((person, count) -> count > 1)
                 .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_SOFT, (person, count) -> BigDecimal.valueOf(count))
                 .indictWith((person, count) -> List.of(person))
                 .asConstraint("Session count for Person");
@@ -120,7 +176,7 @@ public class CostFunction implements ConstraintProvider {
                 .forEach(SessionMember.class)
                 .join(Member.class, equal(SessionMember::getAssignedMember, m -> m))
                 .filter((sm,m)->sm.getRequiredRole() != null && !sm.getRequiredRole().equals(m.getRole()))
-                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_HARD)
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_HARD, (sm,m) -> BigDecimal.valueOf(10))
                 .asConstraint("Wrong Role");
     }
 
@@ -131,7 +187,7 @@ public class CostFunction implements ConstraintProvider {
                 .filter((sm1,sm2) -> sm1.getAssignedMember().equals(sm2.getAssignedMember()))
                 .join(Session.class)
                 .filter((sm1,sm2,sess)->sess.getMembers().containsAll(List.of(sm1,sm2)))
-                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_HARD)
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_HARD, (sm1,sm2,sess) -> BigDecimal.valueOf(10))
                 .asConstraint("Duplicate member");
     }
 

@@ -36,9 +36,8 @@ public class Thesis extends TimedEvent {
     //@ShadowVariable(variableListenerClass = PlanningVariableChangeListener.class,
     //        sourceVariableName = "session")
     @ShadowVariable(variableListenerClass = PlanningVariableChangeListener.class,
-            sourceVariableName = "prev")
-    //@CascadingUpdateShadowVariable(targetMethodName = "updateStartTime")
-    private LocalDateTime startsAt;
+	            sourceVariableName = "prev")
+	private LocalDateTime startsAt;
 
     private Program program;
 
@@ -66,10 +65,6 @@ public class Thesis extends TimedEvent {
                 this.getPrev() != null &&
                         !(this.endsAt().compareTo(tc.getFrom()) <= 0
                                 || this.startsAt().compareTo(tc.getTo()) >=0));
-    }
-
-    public Boolean overlapsWith(Thesis th) {
-        return !(this.endsAt().compareTo(th.getStartsAt()) <= 0 || this.getStartsAt().compareTo(th.endsAt()) >=0);
     }
 
     public List<Person> getInvolved() {
