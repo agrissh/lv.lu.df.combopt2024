@@ -44,7 +44,7 @@ public class DefenseSchedule {
     @ProblemFactProperty
     private ScheduleProperties properties = new ScheduleProperties();
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(lv.lu.df.combopt.defsched.slotbased.domain.DefenseSchedule.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule.class);
     public void printSchedule() {
         persons.forEach(p -> {
             LOGGER.info(p.getName() + " not available at " + p.getTimeConstraints());
