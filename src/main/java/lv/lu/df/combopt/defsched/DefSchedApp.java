@@ -17,6 +17,9 @@ import ai.timefold.solver.core.config.localsearch.LocalSearchPhaseConfig;
 import ai.timefold.solver.core.config.solver.EnvironmentMode;
 import ai.timefold.solver.core.config.solver.SolverConfig;
 import ai.timefold.solver.core.config.solver.termination.TerminationConfig;
+import lv.lu.df.combopt.defsched.chainbased.domain.*;
+import lv.lu.df.combopt.defsched.chainbased.solver.CostFunction;
+import lv.lu.df.combopt.defsched.listbased.domain.ScheduleProperties;
 import lv.lu.df.combopt.defsched.listbased.domain.TimeConstraint;
 import lv.lu.df.combopt.defsched.slotbased.domain.*;
 import lv.lu.df.combopt.defsched.slotbased.domain.DefenseSchedule;
@@ -59,8 +62,8 @@ public class DefSchedApp {
         LOGGER.info("App started!");
 
         //runSlotBased();
-        runListBased();
-
+        //runListBased();
+        runChainBased();
 
         LOGGER.info("App finished!");
     }
@@ -74,7 +77,7 @@ public class DefSchedApp {
                                 TimedEvent.class, SessionMember.class)
                         .withConstraintProviderClass(CostFunction.class)
                         .withTerminationConfig(new TerminationConfig()
-                                .withSecondsSpentLimit(15L))
+                                .withSecondsSpentLimit(5L))
                         .withEnvironmentMode(EnvironmentMode.TRACKED_FULL_ASSERT)
         );
 
@@ -84,7 +87,7 @@ public class DefSchedApp {
         solution.printSchedule();
 
         SolutionManager<lv.lu.df.combopt.defsched.chainbased.domain.DefenseSchedule, HardMediumSoftBigDecimalScore> solutionManager = SolutionManager.create(solverFactory);
-        //SolutionManager<lv.lu.df.combopt.defsched.listbased.domain.DefenseSchedule, HardMediumSoftBigDecimalScore> solutionManager = SolutionManager.create(solverFactoryFromConfigXML);
+
         LOGGER.debug(solutionManager.explain(solution).getSummary());
         //printScoreSummary(solutionManager.explain(solution));
         //ScoreAnalysis<HardSoftScore> scoreAnalysis = solutionManager.analyze(solution);
