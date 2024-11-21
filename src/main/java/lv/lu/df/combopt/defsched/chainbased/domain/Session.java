@@ -3,9 +3,12 @@ package lv.lu.df.combopt.defsched.chainbased.domain;
 import ai.timefold.solver.core.api.domain.entity.PlanningEntity;
 import ai.timefold.solver.core.api.domain.lookup.PlanningId;
 import ai.timefold.solver.core.api.domain.solution.PlanningEntityCollectionProperty;
+import ai.timefold.solver.core.api.domain.variable.PiggybackShadowVariable;
+import ai.timefold.solver.core.api.domain.variable.ShadowVariable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lv.lu.df.combopt.defsched.chainbased.solver.PlanningVariableChangeListenerNext;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,6 +18,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @NoArgsConstructor
+@PlanningEntity
 public class Session extends TimedEvent {
     @PlanningId
     private Integer sessionId;
@@ -28,14 +32,18 @@ public class Session extends TimedEvent {
         return sessionStart;
     }
 
+    @ShadowVariable(variableListenerClass = PlanningVariableChangeListenerNext.class, sourceEntityClass = TimedEvent.class,
+    sourceVariableName = "next")
+    private LocalDateTime endingTime;
+
     public LocalDateTime endsAt() {
-        LocalDateTime endsAt = this.startsAt();
+        /*LocalDateTime endsAt = this.startsAt();
         Thesis next = this.getNext();
         while (next != null) {
             endsAt = endsAt.plusMinutes(slotDurationMinutes);
             next = next.getNext();
-        }
-        return endsAt;
+        }*/
+        return endingTime;
     }
 
     public Boolean containsThesis(Thesis th) {

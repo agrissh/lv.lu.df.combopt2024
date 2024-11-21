@@ -25,6 +25,7 @@ public class TimedEvent {
     }
 
     public Boolean overlapsWith(TimedEvent event) {
-        return !(this.endsAt().compareTo(event.startsAt()) <= 0 || this.startsAt().compareTo(event.endsAt()) >=0);
+        return this.endsAt()!=null && event.endsAt()!=null &&
+                !(this.endsAt().compareTo(event.startsAt()) <= 0 || this.startsAt().compareTo(event.endsAt()) >=0);
     }
 }

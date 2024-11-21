@@ -74,10 +74,11 @@ public class DefSchedApp {
                 new SolverConfig()
                         .withSolutionClass(lv.lu.df.combopt.defsched.chainbased.domain.DefenseSchedule.class)
                         .withEntityClasses(lv.lu.df.combopt.defsched.chainbased.domain.Thesis.class,
-                                TimedEvent.class, SessionMember.class)
+                                TimedEvent.class, SessionMember.class,
+                                lv.lu.df.combopt.defsched.chainbased.domain.Session.class)
                         .withConstraintProviderClass(CostFunction.class)
                         .withTerminationConfig(new TerminationConfig()
-                                .withSecondsSpentLimit(5L))
+                                .withSecondsSpentLimit(15L))
                         .withEnvironmentMode(EnvironmentMode.TRACKED_FULL_ASSERT)
         );
 
