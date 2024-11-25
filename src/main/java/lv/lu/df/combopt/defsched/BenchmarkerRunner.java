@@ -10,7 +10,7 @@ import java.io.File;
 public class BenchmarkerRunner {
     public static void main(String[] args) {
         PlannerBenchmarkFactory benchmarkFactory = PlannerBenchmarkFactory
-                .createFromSolverConfigXmlResource("SolverConfig.xml");
+                .createFromXmlResource("BenchmarkConfigChained.xml");
 
         //PlannerBenchmarkFactory benchmarkFactoryFromXML = PlannerBenchmarkFactory
         //        .createFromXmlResource("BenchmarkConfig.xml");
@@ -20,9 +20,9 @@ public class BenchmarkerRunner {
 
         //DefenseScheduleJsonIO io = new DefenseScheduleJsonIO();
         //DefenseSchedule problem = io.read(new File("data/example_8.json"));
-        DefenseSchedule problem = DefSchedApp.createExampleLB();
+        //DefenseSchedule problem = DefSchedApp.createExampleLB();
 
-        PlannerBenchmark benchmark = benchmarkFactory.buildPlannerBenchmark(problem);
+        PlannerBenchmark benchmark = benchmarkFactory.buildPlannerBenchmark();
         //PlannerBenchmark benchmark = benchmarkFactoryFromXML.buildPlannerBenchmark();
         //PlannerBenchmark benchmark = benchmarkFactoryFromFreeMarkerXML.buildPlannerBenchmark();
         benchmark.benchmarkAndShowReportInBrowser();

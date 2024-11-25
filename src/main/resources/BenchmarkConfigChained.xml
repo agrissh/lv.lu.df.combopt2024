@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plannerBenchmark xmlns="https://timefold.ai/xsd/benchmark" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="https://timefold.ai/xsd/benchmark https://timefold.ai/xsd/benchmark/benchmark.xsd">
+    <benchmarkDirectory>benchmarkReports</benchmarkDirectory>
+
+    <inheritedSolverBenchmark>
+        <solver>
+            <environmentMode>REPRODUCIBLE</environmentMode>
+            <!-- Define the model -->
+            <solutionClass>lv.lu.df.combopt.defsched.chainbased.domain.DefenseSchedule</solutionClass>
+            <entityClass>lv.lu.df.combopt.defsched.chainbased.domain.Session</entityClass>
+            <entityClass>lv.lu.df.combopt.defsched.chainbased.domain.Thesis</entityClass>
+            <entityClass>lv.lu.df.combopt.defsched.chainbased.domain.TimedEvent</entityClass>
+            <entityClass>lv.lu.df.combopt.defsched.chainbased.domain.SessionMember</entityClass>
+            <!-- Define the score function -->
+            <scoreDirectorFactory>
+                <constraintProviderClass>lv.lu.df.combopt.defsched.chainbased.solver.CostFunction</constraintProviderClass>
+            </scoreDirectorFactory>
+
+            <!-- Configure the optimization algorithms (optional) -->
+            <termination>
+                <secondsSpentLimit>1800</secondsSpentLimit>
+            </termination>
+
+            <constructionHeuristic>
+                <queuedEntityPlacer>
+                    <entitySelector id="placerEntitySelector">
+                        <entityClass>lv.lu.df.combopt.defsched.chainbased.domain.Thesis</entityClass>
+                        <cacheType>PHASE</cacheType>
+                    </entitySelector>
+                    <changeMoveSelector>
+                        <entitySelector mimicSelectorRef="placerEntitySelector"/>
+                    </changeMoveSelector>
+                </queuedEntityPlacer>
+            </constructionHeuristic>
+            <constructionHeuristic>
+                <queuedEntityPlacer>
+                    <entitySelector id="placerEntitySelector">
+                        <entityClass>lv.lu.df.combopt.defsched.chainbased.domain.SessionMember</entityClass>
+                        <cacheType>PHASE</cacheType>
+                    </entitySelector>
+                    <changeMoveSelector>
+                        <entitySelector mimicSelectorRef="placerEntitySelector"/>
+                    </changeMoveSelector>
+                </queuedEntityPlacer>
+            </constructionHeuristic>
+        </solver>
+       <problemBenchmarks>
+            <solutionFileIOClass>lv.lu.df.combopt.defsched.chainbased.domain.DefenseScheduleJsonIO</solutionFileIOClass>
+            <writeOutputSolutionEnabled>true</writeOutputSolutionEnabled>
+            <inputSolutionFile>data/example_real_problem.json</inputSolutionFile>
+            <singleStatisticType>CONSTRAINT_MATCH_TOTAL_STEP_SCORE</singleStatisticType>
+       </problemBenchmarks>
+        <!--<subSingleCount>5</subSingleCount>-->
+    </inheritedSolverBenchmark>
+
+    <solverBenchmark>
+        <name>Tabu Default</name>
+        <solver>
+            <localSearch>
+                <localSearchType>TABU_SEARCH</localSearchType>
+                <unionMoveSelector>
+                    <changeMoveSelector>
+                    <entitySelector>
+                        <entityClass>lv.lu.df.combopt.defsched.chainbased.domain.Thesis</entityClass>
+                    </entitySelector>
+                    <valueSelector />
+                </changeMoveSelector>
+                    <changeMoveSelector>
+                    <entitySelector>
+                        <entityClass>lv.lu.df.combopt.defsched.chainbased.domain.SessionMember</entityClass>
+                    </entitySelector>
+                    <valueSelector />
+                </changeMoveSelector>
+                    <swapMoveSelector>
+                    <entitySelector>
+                        <entityClass>lv.lu.df.combopt.defsched.chainbased.domain.Thesis</entityClass>
+                    </entitySelector>
+                    <secondaryEntitySelector>
+                        <entityClass>lv.lu.df.combopt.defsched.chainbased.domain.Thesis</entityClass>
+                    </secondaryEntitySelector>
+                </swapMoveSelector>
+                    <swapMoveSelector>
+                        <entitySelector>
+                            <entityClass>lv.lu.df.combopt.defsched.chainbased.domain.SessionMember</entityClass>
+                        </entitySelector>
+                        <secondaryEntitySelector>
+                            <entityClass>lv.lu.df.combopt.defsched.chainbased.domain.SessionMember</entityClass>
+                        </secondaryEntitySelector>
+                    </swapMoveSelector>
+                    <subChainChangeMoveSelector>
+                        <entityClass>lv.lu.df.combopt.defsched.chainbased.domain.Thesis</entityClass>
+                    </subChainChangeMoveSelector>
+                </unionMoveSelector>
+            </localSearch>
+        </solver>
+    </solverBenchmark>
+    <solverBenchmark>
+        <name>LAHC Default</name>
+        <solver>
+            <localSearch>
+                <localSearchType>LATE_ACCEPTANCE</localSearchType>
+            </localSearch>
+        </solver>
+    </solverBenchmark>
+</plannerBenchmark>

@@ -8,6 +8,7 @@ import ai.timefold.solver.core.api.domain.solution.ProblemFactCollectionProperty
 import ai.timefold.solver.core.api.domain.valuerange.ValueRangeProvider;
 import ai.timefold.solver.core.api.score.buildin.hardmediumsoft.HardMediumSoftScore;
 import ai.timefold.solver.core.api.score.buildin.hardmediumsoftbigdecimal.HardMediumSoftBigDecimalScore;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,12 +40,14 @@ public class DefenseSchedule {
 
     @ProblemFactCollectionProperty
     @ValueRangeProvider(id = "members")
+    @JsonIdentityReference(alwaysAsId = true)
     public List<Member> members = new ArrayList<>();
 
     @ProblemFactCollectionProperty
     private List<Program> programs = new ArrayList<>();
 
     @PlanningEntityCollectionProperty
+    @JsonIdentityReference(alwaysAsId = true)
     private List<SessionMember> sessionMembers = new ArrayList<>();
 
     @PlanningScore

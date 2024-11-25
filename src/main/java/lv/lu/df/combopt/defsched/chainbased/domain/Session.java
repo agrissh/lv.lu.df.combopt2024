@@ -5,10 +5,13 @@ import ai.timefold.solver.core.api.domain.lookup.PlanningId;
 import ai.timefold.solver.core.api.domain.solution.PlanningEntityCollectionProperty;
 import ai.timefold.solver.core.api.domain.variable.PiggybackShadowVariable;
 import ai.timefold.solver.core.api.domain.variable.ShadowVariable;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lv.lu.df.combopt.defsched.chainbased.solver.PlanningVariableChangeListenerNext;
+import lv.lu.df.combopt.defsched.listbased.domain.Person;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,6 +22,9 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 @PlanningEntity
+@JsonIdentityInfo(scope = Session.class,
+        property = "sessionId",
+        generator = ObjectIdGenerators.PropertyGenerator.class)
 public class Session extends TimedEvent {
     @PlanningId
     private Integer sessionId;
