@@ -32,9 +32,6 @@ public class PlanningVariableChangeListener implements VariableListener<DefenseS
                 time = shadowThesis.endsAt();
                 shadowThesis = shadowThesis.getNext();
             }
-            scoreDirector.beforeVariableChanged(thesis.getSession(), "endingTime");
-            thesis.getSession().setEndingTime(time);
-            scoreDirector.afterVariableChanged(thesis.getSession(), "endingTime");
         }
     }
 

@@ -80,7 +80,7 @@ public class DefSchedApp {
                                 lv.lu.df.combopt.defsched.chainbased.domain.Session.class)
                         .withConstraintProviderClass(CostFunction.class)
                         .withTerminationConfig(new TerminationConfig()
-                                .withSecondsSpentLimit(600L))
+                                .withSecondsSpentLimit(200L))
                         .withEnvironmentMode(EnvironmentMode.REPRODUCIBLE)
         );
 

@@ -20,19 +20,21 @@ public class CostFunction implements ConstraintProvider {
     @Override
     public Constraint[] defineConstraints(ConstraintFactory constraintFactory) {
         return new Constraint[]{
-                authorUnavailable(constraintFactory),
-                supervisorUnavailable(constraintFactory),
-                reviewerUnavailable(constraintFactory),
-                conflictingTimeForPerson(constraintFactory),
+                //authorUnavailable(constraintFactory),
+                //supervisorUnavailable(constraintFactory),
+                //reviewerUnavailable(constraintFactory),
+                //conflictingTimeForPerson(constraintFactory),
                 sessionsForPerson(constraintFactory),
-                secondSessionInOneDayForPerson(constraintFactory),
-                fairSessions(constraintFactory),
+                //sessionsForPerson_new(constraintFactory)
+                //*//sessionsForMember(constraintFactory)
+                //secondSessionInOneDayForPerson(constraintFactory),
+                //fairSessions(constraintFactory),
 
-                wrongRoleForMember(constraintFactory),
-                notUniqueMember(constraintFactory),
-                memberUnavailable(constraintFactory),
-                conflictingTimeForMember(constraintFactory),
-                conflictingSessionsForMember(constraintFactory)
+                //wrongRoleForMember(constraintFactory),
+                //notUniqueMember(constraintFactory),
+                //memberUnavailable(constraintFactory),
+                //conflictingTimeForMember(constraintFactory),
+                //conflictingSessionsForMember(constraintFactory)
         };
     }
 
@@ -121,13 +123,10 @@ public class CostFunction implements ConstraintProvider {
     public Constraint sessionsForPerson(ConstraintFactory constraintFactory) {
         return constraintFactory
                 .forEach(Person.class)
-                .join(Thesis.class)
-                .filter((p, t) -> t.getInvolved().contains(p))
-                .join(Session.class)
-                .filter((p, th, sess) -> sess.containsThesis(th))
-                .map((p, th, sess) -> Pair.create(p, sess))
+                .join(Thesis.class, Joiners.filtering((p, t) -> t.getInvolved().contains(p)))
+                .flattenLast(th -> List.of(th.getSession()))
                 .distinct()
-                .groupBy(pair -> pair.getKey(), count())
+                .groupBy((p, sess)->p, countBi())
                 .concat(constraintFactory
                    .forEach(Person.class)
                    .join(SessionMember.class, Joiners.filtering((p,sm)->p.getMembership().contains(sm.getAssignedMember())))
@@ -135,6 +134,20 @@ public class CostFunction implements ConstraintProvider {
                    .groupBy((p,sm,sess) -> p, countTri())
                 )
                 .groupBy((person, count) -> person, sum((person, count) -> count))
+                .filter((person, count) -> count > 2)
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_SOFT, (person, count) -> BigDecimal.valueOf(count * 25))
+                .indictWith((person, count) -> List.of(person))
+                .asConstraint("Session count for Person");
+    }
+
+    public Constraint sessionsForPerson_new(ConstraintFactory constraintFactory) {
+        return constraintFactory
+                .forEach(Person.class)
+                .join(Session.class)
+                .ifExists(Thesis.class, Joiners.filtering((p, sess, th) -> th.getSession().equals(sess) && th.getInvolved().contains(p)))
+                .groupBy((person, sess) -> person, countBi())
+
+                //.groupBy((person, count) -> person, sum((person, count) -> count))
                 .filter((person, count) -> count > 2)
                 .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_SOFT, (person, count) -> BigDecimal.valueOf(count * 25))
                 .indictWith((person, count) -> List.of(person))
@@ -158,10 +171,10 @@ public class CostFunction implements ConstraintProvider {
     // Vēlams, lai iesaistītajam vienā dienā nav jāapmeklē vairākas sesijas.
     public Constraint secondSessionInOneDayForPerson(ConstraintFactory constraintFactory) {
         return constraintFactory
-                .forEachUniquePair(Thesis.class, equal(th -> th.getSession().getSessionStart().toLocalDate()))
-                .filter((th1, th2) -> !th1.getSession().equals(th2.getSession()))
-                .join(Person.class)
-                .filter((th1, th2, p) -> th1.getInvolved().contains(p) && th2.getInvolved().contains(p))
+                .forEachUniquePair(Thesis.class,
+                        Joiners.equal(th -> th.getSession().getSessionStart().toLocalDate()),
+                        Joiners.filtering((th1, th2) -> !th1.getSession().equals(th2.getSession())))
+                .join(Person.class, Joiners.filtering((th1, th2, p) -> th1.getInvolved().contains(p) && th2.getInvolved().contains(p)))
                 .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_SOFT, (th1, th2, p) -> BigDecimal.valueOf(15))
                 .asConstraint("Second Session in one day for Person");
     }

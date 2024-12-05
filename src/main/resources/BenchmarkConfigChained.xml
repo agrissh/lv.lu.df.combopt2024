@@ -19,7 +19,7 @@
 
             <!-- Configure the optimization algorithms (optional) -->
             <termination>
-                <secondsSpentLimit>1800</secondsSpentLimit>
+                <secondsSpentLimit>3600</secondsSpentLimit>
             </termination>
 
             <constructionHeuristic>
@@ -95,12 +95,12 @@
             </localSearch>
         </solver>
     </solverBenchmark>
-    <solverBenchmark>
+    <!--<solverBenchmark>
         <name>LAHC Default</name>
         <solver>
             <localSearch>
                 <localSearchType>LATE_ACCEPTANCE</localSearchType>
             </localSearch>
         </solver>
-    </solverBenchmark>
+    </solverBenchmark>-->
 </plannerBenchmark>
