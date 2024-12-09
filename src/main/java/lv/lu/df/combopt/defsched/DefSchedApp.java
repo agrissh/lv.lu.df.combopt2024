@@ -63,14 +63,22 @@ public class DefSchedApp {
 
         //runSlotBased();
         //runListBased();
-        runChainBased();
-
+        //runChainBased();
+        printSolution("benchmarkReports/2024-12-07_113620/example_real_problem_3/Tabu Default/sub0/example_real_problem_3.json");
         LOGGER.info("App finished!");
     }
-    private static void runChainBased() {
-        //lv.lu.df.combopt.defsched.chainbased.domain.DefenseSchedule problem = createExampleCB();
+
+    private static void printSolution(String s) {
         DefenseScheduleJsonIO io = new DefenseScheduleJsonIO();
-        lv.lu.df.combopt.defsched.chainbased.domain.DefenseSchedule problem = io.read(new File("data/example_real_problem.json"));
+        lv.lu.df.combopt.defsched.chainbased.domain.DefenseSchedule
+                problem = io.read(new File(s));
+        problem.printSchedule();
+    }
+
+    private static void runChainBased() {
+        lv.lu.df.combopt.defsched.chainbased.domain.DefenseSchedule problem = createExampleCB();
+        DefenseScheduleJsonIO io = new DefenseScheduleJsonIO();
+        //lv.lu.df.combopt.defsched.chainbased.domain.DefenseSchedule problem = io.read(new File("data/example_real_problem_2.json"));
 
         SolverFactory<lv.lu.df.combopt.defsched.chainbased.domain.DefenseSchedule> solverFactory = SolverFactory.create(
                 new SolverConfig()
@@ -428,9 +436,9 @@ public class DefSchedApp {
         session1.setSessionStart(LocalDateTime.of(2025, Month.JANUARY, 2, 9, 0, 0));
         session1.setSlotDurationMinutes(30);
 
-        SessionMember sm11 = new SessionMember(1, null, MemberRole.CHIEF);
-        SessionMember sm12 = new SessionMember(2, null, MemberRole.SECRETARY);
-        SessionMember sm13 = new SessionMember(3, null, null);
+        SessionMember sm11 = new SessionMember(1, null, MemberRole.CHIEF, session1);
+        SessionMember sm12 = new SessionMember(2, null, MemberRole.SECRETARY,  session1);
+        SessionMember sm13 = new SessionMember(3, null, null,  session1);
         session1.getMembers().addAll(List.of(sm12,sm13,sm11));
 
         schedule1.getSessionMembers().addAll(List.of(sm12,sm13,sm11));
@@ -443,9 +451,9 @@ public class DefSchedApp {
         session2.setSessionStart(LocalDateTime.of(2025, Month.JANUARY, 2, 9, 0, 0));
         session2.setSlotDurationMinutes(30);
 
-        SessionMember sm21 = new SessionMember(4, null, MemberRole.CHIEF);
-        SessionMember sm22 = new SessionMember(5, null, MemberRole.SECRETARY);
-        SessionMember sm23 = new SessionMember(6, null, null);
+        SessionMember sm21 = new SessionMember(4, null, MemberRole.CHIEF,  session2);
+        SessionMember sm22 = new SessionMember(5, null, MemberRole.SECRETARY, session2);
+        SessionMember sm23 = new SessionMember(6, null, null, session2);
         session2.getMembers().addAll(List.of(sm23,sm22,sm21));
 
         schedule1.getSessionMembers().addAll(List.of(sm23,sm22,sm21));
@@ -455,62 +463,73 @@ public class DefSchedApp {
                 new lv.lu.df.combopt.defsched.chainbased.domain.TimeConstraint(1,
                 LocalDateTime.of(2025, Month.JANUARY, 2, 10, 45, 0),
                 LocalDateTime.of(2025, Month.JANUARY, 2, 23, 59, 59));
-        Member mbProfAmbainis = new Member(1, MemberRole.MEMBER, false, program);
+        Member mbProfAmbainis = new Member(1, MemberRole.MEMBER, false, program, null);
         lv.lu.df.combopt.defsched.chainbased.domain.Person profAmbainis =
                 new lv.lu.df.combopt.defsched.chainbased.domain.Person(1, "prof. Andris Ambainis", List.of(tcProfAmbainis),
                         List.of(mbProfAmbainis));
-        Member mbProfBorzovs = new Member(2, MemberRole.CHIEF, false, program);
+        mbProfAmbainis.setPerson(profAmbainis);
+
+        Member mbProfBorzovs = new Member(2, MemberRole.CHIEF, false, program, null);
         lv.lu.df.combopt.defsched.chainbased.domain.Person profBorzovs =
                 new lv.lu.df.combopt.defsched.chainbased.domain.Person(2, "prof. Juris Borzovs", List.of(),
                         List.of(mbProfBorzovs));
+        mbProfBorzovs.setPerson(profBorzovs);
         lv.lu.df.combopt.defsched.chainbased.domain.TimeConstraint tcProfSelavo =
                 new lv.lu.df.combopt.defsched.chainbased.domain.TimeConstraint(2,
                 LocalDateTime.of(2025, Month.JANUARY, 2, 9, 30, 0),
                 LocalDateTime.of(2025, Month.JANUARY, 2, 23, 59, 59));
-        Member mbProfSelavo = new Member(3, MemberRole.MEMBER, false, program);
+        Member mbProfSelavo = new Member(3, MemberRole.MEMBER, false, program, null);
         lv.lu.df.combopt.defsched.chainbased.domain.Person profSelavo =
                 new lv.lu.df.combopt.defsched.chainbased.domain.Person(3, "prof. Leo Seļavo", List.of(tcProfSelavo),
                         List.of(mbProfSelavo));
+        mbProfSelavo.setPerson(profSelavo);
         lv.lu.df.combopt.defsched.chainbased.domain.TimeConstraint tcdocSostaks =
                 new lv.lu.df.combopt.defsched.chainbased.domain.TimeConstraint(3,
                 LocalDateTime.of(2025, Month.JANUARY, 2, 8, 45, 0),
                 LocalDateTime.of(2025, Month.JANUARY, 2, 9, 59, 59));
-        Member mbDocSostaks = new Member(4, MemberRole.SECRETARY, false, program);
+        Member mbDocSostaks = new Member(4, MemberRole.SECRETARY, false, program, null);
         lv.lu.df.combopt.defsched.chainbased.domain.Person docSostaks =
                 new lv.lu.df.combopt.defsched.chainbased.domain.Person(4, "doc. Agris Šostaks", List.of(),
                         List.of(mbDocSostaks));
-        Member mbProfPodnieks = new Member(5, MemberRole.CHIEF, false, program);
+        mbDocSostaks.setPerson(docSostaks);
+        Member mbProfPodnieks = new Member(5, MemberRole.CHIEF, false, program, null);
         lv.lu.df.combopt.defsched.chainbased.domain.Person profPodnieks =
                 new lv.lu.df.combopt.defsched.chainbased.domain.Person(5, "prof. Karlis Podnieks", List.of(),
                         List.of(mbProfPodnieks));
+        mbProfPodnieks.setPerson(profPodnieks);
         lv.lu.df.combopt.defsched.chainbased.domain.TimeConstraint tcProfNiedrite =
                 new lv.lu.df.combopt.defsched.chainbased.domain.TimeConstraint(4,
                 LocalDateTime.of(2025, Month.JANUARY, 2, 9, 30, 0),
                 LocalDateTime.of(2025, Month.JANUARY, 2, 10, 0, 0));
-        Member mbProfNiedrite = new Member(6, MemberRole.MEMBER, false, program);
+        Member mbProfNiedrite = new Member(6, MemberRole.MEMBER, false, program, null);
         lv.lu.df.combopt.defsched.chainbased.domain.Person profNiedrite =
                 new lv.lu.df.combopt.defsched.chainbased.domain.Person(6, "prof. Laila Niedrīte", List.of(tcProfNiedrite),
                         List.of(mbProfNiedrite));
+        mbProfNiedrite.setPerson(profNiedrite);
         lv.lu.df.combopt.defsched.chainbased.domain.TimeConstraint tcProfBarzdins =
                 new lv.lu.df.combopt.defsched.chainbased.domain.TimeConstraint(5,
                 LocalDateTime.of(2025, Month.JANUARY, 2, 10, 15, 0),
                 LocalDateTime.of(2025, Month.JANUARY, 2, 23, 59, 59));
-        Member mbProfBarzdins = new Member(7, MemberRole.MEMBER, false, program);
+        Member mbProfBarzdins = new Member(7, MemberRole.MEMBER, false, program, null);
         lv.lu.df.combopt.defsched.chainbased.domain.Person profBarzdins =
                 new lv.lu.df.combopt.defsched.chainbased.domain.Person(7, "prof. Guntis Bārzdiņš", List.of(tcProfBarzdins),
                         List.of(mbProfBarzdins));
-        Member mbDocRencis = new Member(8, MemberRole.SECRETARY, false, program);
+        mbProfBarzdins.setPerson(profBarzdins);
+        Member mbDocRencis = new Member(8, MemberRole.SECRETARY, false, program, null);
         lv.lu.df.combopt.defsched.chainbased.domain.Person docRencis =
                 new lv.lu.df.combopt.defsched.chainbased.domain.Person(101, "doc. Edgars Rencis", List.of(),
                         List.of(mbDocRencis));
-        Member mbProfCelms = new Member(9, MemberRole.CHIEF, false, program);
+        mbDocRencis.setPerson(docRencis);
+        Member mbProfCelms = new Member(9, MemberRole.CHIEF, false, program, null);
         lv.lu.df.combopt.defsched.chainbased.domain.Person profCelms =
                 new lv.lu.df.combopt.defsched.chainbased.domain.Person(102, "asoc. prof. Edgars Celms", List.of(),
                         List.of(mbProfCelms));
-        Member mbDocFreivalds = new Member(10, MemberRole.MEMBER, false, program);
+        mbProfCelms.setPerson(profCelms);
+        Member mbDocFreivalds = new Member(10, MemberRole.MEMBER, false, program, null);
         lv.lu.df.combopt.defsched.chainbased.domain.Person docFreivalds =
                 new lv.lu.df.combopt.defsched.chainbased.domain.Person(103, "doc. Karlis Freivalds", List.of(),
                         List.of(mbDocFreivalds));
+        mbDocFreivalds.setPerson(docFreivalds);
         schedule1.getPersons().addAll(List.of(profSelavo, profAmbainis, profBorzovs, profPodnieks,
                 docSostaks, profNiedrite, profBarzdins,docRencis,profCelms,docFreivalds));
         schedule1.getMembers().addAll(List.of(mbProfAmbainis,mbProfNiedrite,mbProfBarzdins,mbProfPodnieks,

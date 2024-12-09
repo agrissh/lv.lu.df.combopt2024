@@ -64,14 +64,15 @@ public class DefenseSchedule {
                     session.startsAt() + " && ends at " + session.endsAt());
             session.getMembers().stream().forEach(m -> {
                 Person person = this.getPersons().stream().filter(p -> p.getMembership().contains(m.getAssignedMember())).findFirst().get();
-                LOGGER.info("   " + m.getRequiredRole() + " : " + person.getName() + " " + m.getAssignedMember().getRole());
+                LOGGER.info("   " + m.getRequiredRole() + " : " + person.getName() + " " + m.getAssignedMember().getRole() + " " +
+                        (m.getAssignedMember().getFromIndustry() ? "I" : "A"));
             });
             Thesis th = session.getNext();
             while (th != null) {
                 LOGGER.info("   Starts at: " + th.getStartsAt().toLocalTime().toString() + /*" cascade: " +
                         th.getCascadeStartsAt().toLocalTime().toString() + */ " "+ th.getThesisId() +
                         " " + th.getAuthor().getName() + " " +
-                        th.getTitle() + " vad. " + th.getSupervisor().getName() +
+                        th.getTitle() + " ("+ th.getProgram().getName() + ")" + " vad. " + th.getSupervisor().getName() +
                         " rec. " + th.getReviewer().getName());
                 th = th.getNext();
             }

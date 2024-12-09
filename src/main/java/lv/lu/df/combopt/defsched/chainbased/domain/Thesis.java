@@ -38,7 +38,8 @@ public class Thesis extends TimedEvent {
 
     @PlanningVariable(graphType = PlanningVariableGraphType.CHAINED,
             valueRangeProviderRefs = {"sessions", "theses"})
-    @JsonIdentityReference(alwaysAsId = true)
+    //@JsonIdentityReference(alwaysAsId = true)
+    @JsonIgnore
     TimedEvent prev;
 
     @AnchorShadowVariable(sourceVariableName = "prev")

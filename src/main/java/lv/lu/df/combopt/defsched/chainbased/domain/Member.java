@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lv.lu.df.combopt.defsched.listbased.domain.Person;
 
 @AllArgsConstructor
 @Setter
@@ -22,4 +21,6 @@ public class Member {
     private Boolean fromIndustry;
     @JsonIdentityReference(alwaysAsId = true)
     private Program program;
+    @JsonIdentityReference(alwaysAsId = true)
+    private Person person;
 }

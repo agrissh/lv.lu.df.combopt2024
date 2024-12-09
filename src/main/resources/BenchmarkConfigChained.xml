@@ -48,7 +48,7 @@
        <problemBenchmarks>
             <solutionFileIOClass>lv.lu.df.combopt.defsched.chainbased.domain.DefenseScheduleJsonIO</solutionFileIOClass>
             <writeOutputSolutionEnabled>true</writeOutputSolutionEnabled>
-            <inputSolutionFile>data/example_real_problem.json</inputSolutionFile>
+            <inputSolutionFile>data/example_real_problem_3.json</inputSolutionFile>
             <singleStatisticType>CONSTRAINT_MATCH_TOTAL_STEP_SCORE</singleStatisticType>
        </problemBenchmarks>
         <!--<subSingleCount>5</subSingleCount>-->

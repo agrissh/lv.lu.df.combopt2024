@@ -4,12 +4,12 @@ import ai.timefold.solver.core.api.domain.entity.PlanningEntity;
 import ai.timefold.solver.core.api.domain.lookup.PlanningId;
 import ai.timefold.solver.core.api.domain.variable.PlanningVariable;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lv.lu.df.combopt.defsched.listbased.domain.Person;
 
 @AllArgsConstructor
 @Setter
@@ -27,4 +27,7 @@ public class SessionMember {
     private Member assignedMember;
 
     private MemberRole requiredRole;
+
+    @JsonIdentityReference(alwaysAsId = true)
+    private Session session;
 }

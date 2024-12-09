@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class RealDataExtractor {
     public static void main(String[] args) {
         extractData("data/studenti2023kval.xlsx");
-        testData("data/example_real_problem.json");
+        testData("data/example_real_problem_3.json");
     }
 
     private static void testData(String filename) {
@@ -127,6 +127,7 @@ public class RealDataExtractor {
                                 : MemberRole.MEMBER));
                         member.setFromIndustry(memberType >= 3);
                         member.setProgram(LV);
+                        member.setPerson(person);
                         allThePossibleMembers.add(member);
                         person.getMembership().add(member);
                     }
@@ -183,7 +184,7 @@ public class RealDataExtractor {
             problem.setMembers(allThePossibleMembers);
 
             DefenseScheduleJsonIO io = new DefenseScheduleJsonIO();
-            io.write(problem, new File("data/example_real_problem.json"));
+            io.write(problem, new File("data/example_real_problem_3.json"));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -198,11 +199,11 @@ public class RealDataExtractor {
         session.setSlotDurationMinutes(30);
         session.setSessionId(NEXT_ID());
         // HEAD + SEC + 3 mandatory
-        SessionMember hseat = new SessionMember(NEXT_ID(), null, MemberRole.CHIEF);
-        SessionMember sseat = new SessionMember(NEXT_ID(), null, MemberRole.SECRETARY);
-        SessionMember seat1 = new SessionMember(NEXT_ID(), null, null);
-        SessionMember seat2 = new SessionMember(NEXT_ID(), null, null);
-        SessionMember seat3 = new SessionMember(NEXT_ID(), null, null);
+        SessionMember hseat = new SessionMember(NEXT_ID(), null, MemberRole.CHIEF,session);
+        SessionMember sseat = new SessionMember(NEXT_ID(), null, MemberRole.SECRETARY,session);
+        SessionMember seat1 = new SessionMember(NEXT_ID(), null, null, session);
+        SessionMember seat2 = new SessionMember(NEXT_ID(), null, null, session);
+        SessionMember seat3 = new SessionMember(NEXT_ID(), null, null, session);
         problem.getSessionMembers().addAll(List.of(hseat, sseat, seat1, seat2, seat3));
         session.getMembers().addAll(List.of(hseat, sseat, seat1, seat2, seat3));
         problem.getSessions().add(session);

@@ -20,21 +20,24 @@ public class CostFunction implements ConstraintProvider {
     @Override
     public Constraint[] defineConstraints(ConstraintFactory constraintFactory) {
         return new Constraint[]{
-                //authorUnavailable(constraintFactory),
-                //supervisorUnavailable(constraintFactory),
-                //reviewerUnavailable(constraintFactory),
-                //conflictingTimeForPerson(constraintFactory),
+                authorUnavailable(constraintFactory),
+                supervisorUnavailable(constraintFactory),
+                reviewerUnavailable(constraintFactory),
+                conflictingTimeForPerson(constraintFactory),
                 sessionsForPerson(constraintFactory),
                 //sessionsForPerson_new(constraintFactory)
                 //*//sessionsForMember(constraintFactory)
-                //secondSessionInOneDayForPerson(constraintFactory),
-                //fairSessions(constraintFactory),
+                secondSessionInOneDayForPerson(constraintFactory),
+                fairSessions(constraintFactory),
 
-                //wrongRoleForMember(constraintFactory),
-                //notUniqueMember(constraintFactory),
-                //memberUnavailable(constraintFactory),
-                //conflictingTimeForMember(constraintFactory),
-                //conflictingSessionsForMember(constraintFactory)
+                wrongRoleForMember(constraintFactory),
+                notUniqueMember(constraintFactory),
+                memberUnavailable(constraintFactory),
+                conflictingTimeForMember(constraintFactory),
+                conflictingSessionsForMember(constraintFactory),
+
+                industryPrevalence(constraintFactory),
+                differentProgramsInTheSameSession(constraintFactory)
         };
     }
 
@@ -54,7 +57,7 @@ public class CostFunction implements ConstraintProvider {
                 .forEach(Thesis.class)
                 .join(Person.class, equal(Thesis::getSupervisor, p -> p))
                 .filter((t, p) -> !t.isAvailable(p))
-                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_SOFT, (t, p) -> BigDecimal.valueOf(10))
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_SOFT, (t, p) -> BigDecimal.valueOf(5))
                 .asConstraint("Thesis with supervisor unavailable");
     }
 
@@ -72,8 +75,8 @@ public class CostFunction implements ConstraintProvider {
         // Komisijas loceklim jātiek uz aizstāvēšanos!
         return constraintFactory
                 .forEach(SessionMember.class)
-                .join(Person.class, Joiners.filtering((sm,p)->p.getMembership().contains(sm.getAssignedMember())))
-                .join(Session.class, Joiners.filtering((sm,p,sess)->sess.getMembers().contains(sm)))
+                .join(Person.class, equal(sm -> sm.getAssignedMember().getPerson(), p->p))
+                .join(Session.class, Joiners.filtering((sm,p,sess)->sm.getSession().equals(sess)))
                 .join(Thesis.class, Joiners.filtering((sm,p,sess,th)->th.getSession().equals(sess) &&
                         !th.isAvailable(p)))
                 .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_HARD)
@@ -125,17 +128,17 @@ public class CostFunction implements ConstraintProvider {
                 .forEach(Person.class)
                 .join(Thesis.class, Joiners.filtering((p, t) -> t.getInvolved().contains(p)))
                 .flattenLast(th -> List.of(th.getSession()))
-                .distinct()
-                .groupBy((p, sess)->p, countBi())
                 .concat(constraintFactory
                    .forEach(Person.class)
-                   .join(SessionMember.class, Joiners.filtering((p,sm)->p.getMembership().contains(sm.getAssignedMember())))
-                   .join(Session.class, Joiners.filtering((p,sm,sess)->sess.getMembers().contains(sm)))
-                   .groupBy((p,sm,sess) -> p, countTri())
+                   .join(SessionMember.class, Joiners.filtering((p,sm)->sm.getAssignedMember().getPerson().equals(p)))
+                   .flattenLast(sm -> List.of(sm.getSession()))
+                   // Ja sesijā nav neviena darba, tad jau nav jānāk
+                   .ifNotExists(Thesis.class, Joiners.equal((p,sess)->sess, th -> th.getSession()))
                 )
-                .groupBy((person, count) -> person, sum((person, count) -> count))
+                .distinct()
+                .groupBy((person, session) -> person, countBi())
                 .filter((person, count) -> count > 2)
-                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_SOFT, (person, count) -> BigDecimal.valueOf(count * 25))
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_SOFT, (person, count) -> BigDecimal.valueOf(count * 5))
                 .indictWith((person, count) -> List.of(person))
                 .asConstraint("Session count for Person");
     }
@@ -209,6 +212,28 @@ public class CostFunction implements ConstraintProvider {
                 .filter((sm1,sm2,sess)->sess.getMembers().containsAll(List.of(sm1,sm2)))
                 .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_HARD, (sm1,sm2,sess) -> BigDecimal.valueOf(10))
                 .asConstraint("Duplicate member");
+    }
+
+
+    Constraint industryPrevalence(ConstraintFactory constraintFactory) {
+        return constraintFactory
+                .forEach(Session.class)
+                .join(SessionMember.class, Joiners.equal(sess->sess, sm -> sm.getSession()))
+                .flattenLast(sm -> List.of(sm.getAssignedMember()))
+                .groupBy((sess, member) -> Pair.create(sess,member.getFromIndustry()), countBi())
+                // TODO: make it work for different seat number
+                .filter((pair,count) -> pair.getValue() & count<3)
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_HARD, (ind,count) -> BigDecimal.valueOf(1))
+                .asConstraint("Not enough industry in comission");
+    }
+
+    Constraint differentProgramsInTheSameSession(ConstraintFactory constraintFactory) {
+        return constraintFactory
+                .forEachUniquePair(Thesis.class, Joiners.filtering((th1,th2)->!th1.getProgram().equals(th2.getProgram())))
+                .join(Session.class, Joiners.filtering((th1,th2,sess)->th1.getSession().equals(sess) &&
+                        th2.getSession().equals(sess)))
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_HARD, (th1,th2,sess) -> BigDecimal.valueOf(1))
+                .asConstraint("Different programs in the same session");
     }
 
 

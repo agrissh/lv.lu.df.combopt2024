@@ -64,4 +64,22 @@ public class DefController {
                 }).collect(Collectors.toList());
     }
 
+    @PostMapping("/putandindictments")
+    public List<SimpleIndictmentObject> putindict(@RequestBody DefenseSchedule problem) {
+        solutionMap.put(problem.getScheduleId(), problem);
+        return solutionManager.explain(problem).getIndictmentMap().entrySet().stream()
+                .map(entry -> {
+                    Indictment<HardMediumSoftBigDecimalScore> indictment = entry.getValue();
+                    return
+                            new SimpleIndictmentObject(entry.getKey(), // indicted Object
+                                    indictment.getScore(),
+                                    indictment.getConstraintMatchCount(),
+                                    indictment.getConstraintMatchSet());
+                }).collect(Collectors.toList());
+    }
+
+    @PostMapping("/put")
+    public void put(@RequestBody DefenseSchedule problem) {
+        solutionMap.put(problem.getScheduleId(), problem);
+    }
 }
