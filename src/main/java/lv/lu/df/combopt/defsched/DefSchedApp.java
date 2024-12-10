@@ -1,5 +1,6 @@
 package lv.lu.df.combopt.defsched;
 
+import ai.timefold.solver.core.api.domain.solution.ConstraintWeightOverrides;
 import ai.timefold.solver.core.api.score.ScoreExplanation;
 import ai.timefold.solver.core.api.score.analysis.ScoreAnalysis;
 import ai.timefold.solver.core.api.score.buildin.hardmediumsoft.HardMediumSoftScore;
@@ -33,12 +34,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class DefSchedApp {
 
@@ -63,8 +62,8 @@ public class DefSchedApp {
 
         //runSlotBased();
         //runListBased();
-        //runChainBased();
-        printSolution("benchmarkReports/2024-12-07_113620/example_real_problem_3/Tabu Default/sub0/example_real_problem_3.json");
+        runChainBased();
+        //printSolution("benchmarkReports/2024-12-07_113620/example_real_problem_3/Tabu Default/sub0/example_real_problem_3.json");
         LOGGER.info("App finished!");
     }
 
@@ -77,7 +76,26 @@ public class DefSchedApp {
 
     private static void runChainBased() {
         lv.lu.df.combopt.defsched.chainbased.domain.DefenseSchedule problem = createExampleCB();
-        DefenseScheduleJsonIO io = new DefenseScheduleJsonIO();
+        var constraintWeightOverridesMap = new HashMap<String, HardMediumSoftBigDecimalScore>();
+        constraintWeightOverridesMap.put("Thesis with author unavailable", HardMediumSoftBigDecimalScore.ofHard(BigDecimal.ONE));
+        constraintWeightOverridesMap.put("Thesis with supervisor unavailable", HardMediumSoftBigDecimalScore.ofSoft(BigDecimal.ONE));
+        constraintWeightOverridesMap.put("Thesis with reviewer unavailable",HardMediumSoftBigDecimalScore.ofSoft(BigDecimal.ONE));
+        constraintWeightOverridesMap.put("Session with member unavailable",HardMediumSoftBigDecimalScore.ofHard(BigDecimal.ONE));
+        constraintWeightOverridesMap.put("Person has to attend two thesis' defence at once",HardMediumSoftBigDecimalScore.ofHard(BigDecimal.ONE));
+        constraintWeightOverridesMap.put("Member has to attend two thesis' defence at once",HardMediumSoftBigDecimalScore.ofHard(BigDecimal.ONE));
+        constraintWeightOverridesMap.put("Parallel commissions",HardMediumSoftBigDecimalScore.ofHard(BigDecimal.ONE));
+        constraintWeightOverridesMap.put("Session count for Person",HardMediumSoftBigDecimalScore.ofSoft(BigDecimal.ONE));
+        constraintWeightOverridesMap.put("Second Session in one day for Person",HardMediumSoftBigDecimalScore.ofSoft(BigDecimal.ONE));
+        constraintWeightOverridesMap.put("Fair Sessions",HardMediumSoftBigDecimalScore.ofMedium(BigDecimal.ONE));
+        constraintWeightOverridesMap.put("Wrong Role", HardMediumSoftBigDecimalScore.ofHard(BigDecimal.ONE));
+        constraintWeightOverridesMap.put("Duplicate member", HardMediumSoftBigDecimalScore.ofHard(BigDecimal.ONE));
+        constraintWeightOverridesMap.put("Not enough industry in comission", HardMediumSoftBigDecimalScore.ZERO);
+        constraintWeightOverridesMap.put("Different programs in the same session", HardMediumSoftBigDecimalScore.ZERO);
+        var constraintWeightOverrides = ConstraintWeightOverrides.of(constraintWeightOverridesMap);
+
+        problem.setConstraintWeightOverrides(constraintWeightOverrides);
+
+        //DefenseScheduleJsonIO io = new DefenseScheduleJsonIO();
         //lv.lu.df.combopt.defsched.chainbased.domain.DefenseSchedule problem = io.read(new File("data/example_real_problem_2.json"));
 
         SolverFactory<lv.lu.df.combopt.defsched.chainbased.domain.DefenseSchedule> solverFactory = SolverFactory.create(

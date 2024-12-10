@@ -222,6 +222,7 @@ public class CostFunction implements ConstraintProvider {
                 .flattenLast(sm -> List.of(sm.getAssignedMember()))
                 .groupBy((sess, member) -> Pair.create(sess,member.getFromIndustry()), countBi())
                 // TODO: make it work for different seat number
+                // TODO: make it work if there is zero members from industry
                 .filter((pair,count) -> pair.getValue() & count<3)
                 .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_HARD, (ind,count) -> BigDecimal.valueOf(1))
                 .asConstraint("Not enough industry in comission");
@@ -229,10 +230,10 @@ public class CostFunction implements ConstraintProvider {
 
     Constraint differentProgramsInTheSameSession(ConstraintFactory constraintFactory) {
         return constraintFactory
-                .forEachUniquePair(Thesis.class, Joiners.filtering((th1,th2)->!th1.getProgram().equals(th2.getProgram())))
-                .join(Session.class, Joiners.filtering((th1,th2,sess)->th1.getSession().equals(sess) &&
-                        th2.getSession().equals(sess)))
-                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_HARD, (th1,th2,sess) -> BigDecimal.valueOf(1))
+                .forEachUniquePair(Thesis.class,
+                        Joiners.equal(Thesis::getSession),
+                        Joiners.filtering((th1,th2)->!th1.getProgram().equals(th2.getProgram())))
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_HARD, (th1,th2) -> BigDecimal.valueOf(1))
                 .asConstraint("Different programs in the same session");
     }
 

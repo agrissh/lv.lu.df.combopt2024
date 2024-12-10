@@ -1,10 +1,7 @@
 package lv.lu.df.combopt.defsched.chainbased.domain;
 
 import ai.timefold.solver.core.api.domain.lookup.PlanningId;
-import ai.timefold.solver.core.api.domain.solution.PlanningEntityCollectionProperty;
-import ai.timefold.solver.core.api.domain.solution.PlanningScore;
-import ai.timefold.solver.core.api.domain.solution.PlanningSolution;
-import ai.timefold.solver.core.api.domain.solution.ProblemFactCollectionProperty;
+import ai.timefold.solver.core.api.domain.solution.*;
 import ai.timefold.solver.core.api.domain.valuerange.ValueRangeProvider;
 import ai.timefold.solver.core.api.score.buildin.hardmediumsoft.HardMediumSoftScore;
 import ai.timefold.solver.core.api.score.buildin.hardmediumsoftbigdecimal.HardMediumSoftBigDecimalScore;
@@ -52,6 +49,8 @@ public class DefenseSchedule {
 
     @PlanningScore
     private HardMediumSoftBigDecimalScore score;
+
+    ConstraintWeightOverrides<HardMediumSoftBigDecimalScore> constraintWeightOverrides;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(lv.lu.df.combopt.defsched.chainbased.domain.DefenseSchedule.class);
     public void printSchedule() {
