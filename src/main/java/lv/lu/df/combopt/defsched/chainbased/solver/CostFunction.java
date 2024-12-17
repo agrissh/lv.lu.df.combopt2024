@@ -10,6 +10,7 @@ import lv.lu.df.combopt.defsched.chainbased.domain.*;
 import org.apache.commons.math3.util.Pair;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +38,8 @@ public class CostFunction implements ConstraintProvider {
                 conflictingSessionsForMember(constraintFactory),
 
                 industryPrevalence(constraintFactory),
-                differentProgramsInTheSameSession(constraintFactory)
+                differentProgramsInTheSameSession(constraintFactory),
+                sessionTooLong(constraintFactory)
         };
     }
 
@@ -130,10 +132,10 @@ public class CostFunction implements ConstraintProvider {
                 .flattenLast(th -> List.of(th.getSession()))
                 .concat(constraintFactory
                    .forEach(Person.class)
-                   .join(SessionMember.class, Joiners.filtering((p,sm)->sm.getAssignedMember().getPerson().equals(p)))
+                   .join(SessionMember.class, Joiners.equal(p->p,sm->sm.getAssignedMember().getPerson()))
                    .flattenLast(sm -> List.of(sm.getSession()))
                    // Ja sesijā nav neviena darba, tad jau nav jānāk
-                   .ifNotExists(Thesis.class, Joiners.equal((p,sess)->sess, th -> th.getSession()))
+                   .ifExists(Thesis.class, Joiners.equal((p,sess)->sess, th -> th.getSession()))
                 )
                 .distinct()
                 .groupBy((person, session) -> person, countBi())
@@ -235,6 +237,16 @@ public class CostFunction implements ConstraintProvider {
                         Joiners.filtering((th1,th2)->!th1.getProgram().equals(th2.getProgram())))
                 .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_HARD, (th1,th2) -> BigDecimal.valueOf(1))
                 .asConstraint("Different programs in the same session");
+    }
+
+    // Sesijas iet par ilgu (teiksim 5 stundas).
+    Constraint sessionTooLong(ConstraintFactory constraintFactory) {
+        return constraintFactory
+                .forEach(Session.class)
+                .filter(sess -> sess.startsAt()!=null && sess.endsAt()!=null &&
+                        Duration.between(sess.startsAt(),sess.endsAt()).toHours()>5)
+                .penalizeBigDecimal(HardMediumSoftBigDecimalScore.ONE_HARD,(sess -> BigDecimal.valueOf(Duration.between(sess.startsAt(),sess.endsAt()).toHours())))
+                .asConstraint("Session too long");
     }
 
 

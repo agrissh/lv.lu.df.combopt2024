@@ -62,8 +62,8 @@ public class DefSchedApp {
 
         //runSlotBased();
         //runListBased();
-        runChainBased();
-        //printSolution("benchmarkReports/2024-12-07_113620/example_real_problem_3/Tabu Default/sub0/example_real_problem_3.json");
+        //runChainBased();
+        printSolution("benchmarkReports/2024-12-17_002236/example_real_problem_3/Tabu Default/sub0/example_real_problem_3.json");
         LOGGER.info("App finished!");
     }
 
@@ -72,6 +72,11 @@ public class DefSchedApp {
         lv.lu.df.combopt.defsched.chainbased.domain.DefenseSchedule
                 problem = io.read(new File(s));
         problem.printSchedule();
+
+        //SolverFactory<lv.lu.df.combopt.defsched.chainbased.domain.DefenseSchedule> solverFactory = SolverFactory.createFromXmlResource("SolverConfigChained.xml");
+        //SolutionManager<lv.lu.df.combopt.defsched.chainbased.domain.DefenseSchedule, HardMediumSoftBigDecimalScore> solutionManager = SolutionManager.create(solverFactory);
+        //ScoreAnalysis<HardMediumSoftBigDecimalScore> scoreAnalysis = solutionManager.analyze(problem);
+        //LOGGER.debug(scoreAnalysis.summarize());
     }
 
     private static void runChainBased() {
@@ -93,7 +98,7 @@ public class DefSchedApp {
         constraintWeightOverridesMap.put("Different programs in the same session", HardMediumSoftBigDecimalScore.ZERO);
         var constraintWeightOverrides = ConstraintWeightOverrides.of(constraintWeightOverridesMap);
 
-        problem.setConstraintWeightOverrides(constraintWeightOverrides);
+        //problem.setConstraintWeightOverrides(constraintWeightOverrides);
 
         //DefenseScheduleJsonIO io = new DefenseScheduleJsonIO();
         //lv.lu.df.combopt.defsched.chainbased.domain.DefenseSchedule problem = io.read(new File("data/example_real_problem_2.json"));

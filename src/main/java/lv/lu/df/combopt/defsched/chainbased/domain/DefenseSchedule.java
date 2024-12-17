@@ -50,7 +50,7 @@ public class DefenseSchedule {
     @PlanningScore
     private HardMediumSoftBigDecimalScore score;
 
-    ConstraintWeightOverrides<HardMediumSoftBigDecimalScore> constraintWeightOverrides;
+    //ConstraintWeightOverrides<HardMediumSoftBigDecimalScore> constraintWeightOverrides;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(lv.lu.df.combopt.defsched.chainbased.domain.DefenseSchedule.class);
     public void printSchedule() {

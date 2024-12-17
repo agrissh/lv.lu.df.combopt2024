@@ -19,7 +19,7 @@
 
             <!-- Configure the optimization algorithms (optional) -->
             <termination>
-                <secondsSpentLimit>60</secondsSpentLimit>
+                <secondsSpentLimit>600</secondsSpentLimit>
             </termination>
 
             <constructionHeuristic>
@@ -27,6 +27,8 @@
                     <entitySelector id="placerEntitySelector">
                         <entityClass>lv.lu.df.combopt.defsched.chainbased.domain.Thesis</entityClass>
                         <cacheType>PHASE</cacheType>
+                        <selectionOrder>SORTED</selectionOrder>
+                        <sorterWeightFactoryClass>lv.lu.df.combopt.defsched.chainbased.solver.ThesisSelectionSorterWeightFactory</sorterWeightFactoryClass>
                     </entitySelector>
                     <changeMoveSelector>
                         <entitySelector mimicSelectorRef="placerEntitySelector"/>
@@ -49,9 +51,11 @@
             <solutionFileIOClass>lv.lu.df.combopt.defsched.chainbased.domain.DefenseScheduleJsonIO</solutionFileIOClass>
             <writeOutputSolutionEnabled>true</writeOutputSolutionEnabled>
             <inputSolutionFile>data/example_real_problem_3.json</inputSolutionFile>
-            <singleStatisticType>CONSTRAINT_MATCH_TOTAL_STEP_SCORE</singleStatisticType>
-       </problemBenchmarks>
-        <!--<subSingleCount>5</subSingleCount>-->
+            <singleStatisticType>PICKED_MOVE_TYPE_STEP_SCORE_DIFF</singleStatisticType>
+           <singleStatisticType>PICKED_MOVE_TYPE_BEST_SCORE_DIFF</singleStatisticType>
+        <!--<singleStatisticType>CONSTRAINT_MATCH_TOTAL_STEP_SCORE</singleStatisticType>-->
+    </problemBenchmarks>
+     <!--<subSingleCount>5</subSingleCount>-->
     </inheritedSolverBenchmark>
 
     <solverBenchmark>
@@ -60,13 +64,17 @@
             <localSearch>
                 <localSearchType>TABU_SEARCH</localSearchType>
                 <unionMoveSelector>
+                    <moveListFactory>
+                        <moveListFactoryClass>lv.lu.df.combopt.defsched.chainbased.solver.MyMoveFactory</moveListFactoryClass>
+                    </moveListFactory>
                     <changeMoveSelector>
                     <entitySelector>
                         <entityClass>lv.lu.df.combopt.defsched.chainbased.domain.Thesis</entityClass>
                     </entitySelector>
                     <valueSelector />
                 </changeMoveSelector>
-                    <changeMoveSelector>
+                <changeMoveSelector>
+                    <filterClass>lv.lu.df.combopt.defsched.chainbased.solver.SessionMemberChangeMoveFilter</filterClass>
                     <entitySelector>
                         <entityClass>lv.lu.df.combopt.defsched.chainbased.domain.SessionMember</entityClass>
                     </entitySelector>
@@ -91,6 +99,14 @@
                     <subChainChangeMoveSelector>
                         <entityClass>lv.lu.df.combopt.defsched.chainbased.domain.Thesis</entityClass>
                     </subChainChangeMoveSelector>
+                    <subChainSwapMoveSelector>
+                        <entityClass>lv.lu.df.combopt.defsched.chainbased.domain.Thesis</entityClass>
+                    </subChainSwapMoveSelector>
+                    <tailChainSwapMoveSelector>
+                        <entitySelector>
+                            <entityClass>lv.lu.df.combopt.defsched.chainbased.domain.Thesis</entityClass>
+                        </entitySelector>
+                    </tailChainSwapMoveSelector>
                 </unionMoveSelector>
             </localSearch>
         </solver>
